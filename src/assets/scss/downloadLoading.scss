@@ -1,0 +1,351 @@
+
+
+.dl {
+    --background: #FFFFFF;
+    --primary: #1F242D; 
+    --border-radius: 3px;
+    --square-size: 70px;
+    --progress-color: linear-gradient(to right top, #00A7FC, #0070ED);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .dl-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(#000000, 0.2);
+      .dl-button {
+        width: 55px;
+        height: 55px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        background: var(--primary);
+        cursor: pointer;
+        transition: width .2s ease-in .4s, height .2s ease-in .4s, background .2s ease-in .4s;
+        .arrow {
+          position: absolute;
+          top: 20px;
+          width: 2px;
+          height: 15px;
+          background: var(--background);
+          border-radius: var(--border-radius);
+          transition: background .2s ease-in .4s;
+          &:before,
+          &:after {
+            content: "";
+            display: block;
+            width: 2px;
+            height: 8px;
+            background: var(--background);
+            position: absolute;
+            bottom: 0px; 
+            transform-origin: 50% 100%;
+            border-radius: var(--border-radius);
+            transition: background .2s ease-in .4s;
+          }
+          &:before {
+            transform: rotate(-45deg) translateX(25%);
+          }
+          &:after {
+            transform: rotate(45deg) translateX(-25%);
+          }
+        }
+        .basket {
+          position: absolute;
+          width: 40px;
+          height: 20px;
+          bottom: 20px;
+          border-radius: var(--border-radius);
+          &:before,
+          &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            height: 0;
+            width: 0;
+            display: block;
+            opacity: var(--opacity, 0);
+            transition: opacity .15s linear;
+            border-bottom: solid 2px var(--primary);
+            box-sizing: border-box;
+          }
+          &:before {
+            left: calc(40px / 2);
+            border-right: solid 2px var(--primary);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+          }
+          &:after {
+            right: calc(40px / 2);
+            border-left: solid 2px var(--primary);
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+          }
+          .basket-top {
+            &:before,
+            &:after {
+              content: "";
+              position: absolute;
+              top: 0;
+              height: 0;
+              width: 0;
+              display: block;
+              border-top: solid 2px var(--primary);
+            }
+            &:before {
+              left: 2px;
+              border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            }
+            &:after {
+              right: 2px;
+              border-radius: var(--border-radius) 0 0 var(--border-radius);
+            }
+          }
+        }
+      }
+      .dl-progress {
+        width: 0px;
+        height: 100%;
+        position: relative;
+        transition: width .2s ease-in, height 0s linear .2s;
+        &::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background: var(--progress-color);
+          transition: top 0s ease .4s; 
+        }
+        .check {
+          position: relative;
+          z-index: 1;
+          pointer-events: none;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          svg {
+            height: 45px;
+            width: 45px;
+            fill: none;
+            stroke: var(--background);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 100 100;
+            stroke-dashoffset: 100;
+          }
+        }
+      }
+    }
+    .dl-status {
+      margin-left: 0;
+      flex-basis: 0;
+      width: 0;
+      transition: all .2s ease-out .2s;
+      clip-path: inset(0 var(--square-size) 0 0);
+      .text {
+        text-align: left;
+        text-transform: uppercase;
+        color: rgba(#fff, 0.3);
+        font-weight: 500;
+        letter-spacing: .5px;
+        line-height: 23px;
+        &.text-number {
+          font-weight: 600;
+          color: rgba(#fff, 0.6);
+        
+        }
+      }
+    }
+    &.run {
+      .dl-box {
+        height: 100%;
+        .dl-button {
+          width: var(--square-size);
+          height: var(--square-size);
+          background: var(--background);
+          transition: width .2s ease-out .3s, height .2s ease-out .3s, background .2s ease-out .3s;
+          .arrow {
+            background: var(--primary);
+            transition: background .3s ease-in;
+            animation: arrow-main .75s ease-in forwards infinite;
+            &:before,
+            &:after {
+              transition: background .3s ease-in;
+              background: var(--primary);
+            }
+            &:before {
+              animation: arrow-left .75s ease-in forwards infinite;
+            }
+            &:after {
+              animation: arrow-right .75s ease-in forwards infinite;
+            }
+          }
+          .basket {
+            &:before,
+            &:after {
+              --opacity: 1;
+              transition: opacity 0s linear .3s;
+              animation: btn-border .3s forwards ease-in normal .5s;
+            }
+            .basket-top {
+              &:before,
+              &:after {
+                animation: btn-border-top .3s forwards ease-in normal .8s;
+              }
+            }
+          }
+        }
+        .dl-progress { 
+          width: var(--square-size);
+          height: var(--square-size);
+          transition: width .3s ease-in .7s, height .3s ease-in .7s;
+      
+      
+        }
+      }
+      .dl-status {
+        width: var(--square-size);
+        clip-path: inset(0 0 0 0);
+        transition: all .3s ease-in .7s;
+        color: #fff;
+        .text {
+          &.text-number {
+            &::after {
+              animation: status-animation 2.5s ease 1.5s forwards;
+            }
+          }
+        }
+      }
+    }
+    &.done {
+      .dl-box {
+        .dl-button {
+          .arrow {
+            animation-play-state: paused;
+            &:before {
+              animation-play-state: paused;
+            }
+            &:after {
+              animation-play-state: paused;
+            }
+          }
+        }
+        .dl-progress {
+          .check {
+            svg {
+              animation: check .3s ease-in-out forwards;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  @keyframes arrow-main {
+      0% {
+          transform: translateY(0);
+      }
+      30% {
+          transform: translateY(-5px);
+      }
+      80% {
+          transform: translateY(5px);
+      }
+      100% {
+          transform: translateY(0);
+      }
+  }
+  @keyframes arrow-left {
+      0% {
+          transform: rotate(-45deg) translateX(25%);
+      }
+      30% {
+          transform: rotate(-55deg) translateX(25%);
+      }
+      80% {
+          transform: rotate(-35deg) translateX(25%);
+      }
+      100% {
+          transform: rotate(-45deg) translateX(25%);
+      }
+  }
+  @keyframes arrow-right {
+      0% {
+          transform: rotate(45deg) translateX(-25%);
+      }
+      30% {
+          transform: rotate(55deg) translateX(-25%);
+      }
+      80% {
+          transform: rotate(35deg) translateX(-25%);
+      }
+      100% {
+          transform: rotate(45deg) translateX(-25%);
+      }
+  }
+  
+  @keyframes btn-border {
+    0% {
+      width: 0;
+      height: 0;
+    }
+    50% {
+      width: calc(40px / 2);
+      height: 0;
+    }
+    100% {
+      width: calc(40px / 2);
+      height: 20px;
+    }
+  }
+  
+  @keyframes btn-border-top {
+    0% {
+      width: 0px;
+    }
+    100% {
+      width: 10px;
+    }
+  }
+  
+  @keyframes check {
+    0% {
+      stroke-dashoffset: 100;
+    }
+    100% {
+      stroke-dashoffset: 5;
+    }
+  }
+  
+  
+  .progress-current{
+    position:absolute;
+    right:0;
+    bottom:0;
+    background:#F34336;
+    height:0%;
+    width:100%;
+  }
+
+  .download_screen{
+    position: absolute;
+    left: 0;
+    top:-100% ;
+    width: 100%;
+    height: 85%;
+    background-color: rgba(#1E1E1E, 1);
+    transition: .5s all;
+    display: grid;
+    place-items:center;
+  }
+
+  .show_progress{
+    top:0;
+  }
+  

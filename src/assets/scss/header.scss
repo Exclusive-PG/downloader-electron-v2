@@ -1,0 +1,151 @@
+.header_app {
+	width: 100%;
+	background-color: transparent;
+	height: 159px;
+}
+
+
+.navigation {
+	position: relative;
+	top: 100px;
+	max-width: 300px;
+	height: 60px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	border-top-right-radius:40px;
+	border-top-left-radius: 40px;
+	ul {
+		display: flex;
+		justify-content: center;
+
+		width: 250px;
+
+		li {
+			list-style: none;
+			position: relative;
+			width: 70px;
+			z-index: 5;
+
+			a {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100%;
+				width: 100%;
+				z-index: -3;
+			}
+		}
+	}
+}
+
+.navigation ul li a .icon {
+	position: relative;
+	display: block;
+	width: 55px;
+	height: 55px;
+	color: #222327;
+	text-align: center;
+	line-height: 65px;
+	border-radius: 50%;
+	z-index: -2;
+}
+
+.navigation ul li.active a .icon {
+	background: var(--clr);
+	color: #fff;
+	transform: translateY(-30px);
+}
+
+.navigation ul li a .icon::before {
+	content: "";
+	position: absolute;
+	top: 10px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--clr);
+	border-radius: 50%;
+	filter: blur(5px);
+	opacity: 0;
+}
+
+.navigation ul li.active a .icon::before {
+	opacity: 0.5;
+}
+
+.indicator {
+	position: absolute;
+	top: -35px;
+	left: 46px;
+	width: 70px;
+	height: 70px;
+	background: #fff;
+	border-radius: 50%;
+	z-index: 1;
+	transition: 0.5s;
+}
+.indicator::before {
+	content: "";
+	position: absolute;
+	top: 5px;
+	left: -28px;
+	width: 30px;
+	height: 30px;
+	background-color: transparent;
+	border-radius: 50%;
+	box-shadow: 15px 18px #fff;
+}
+
+.indicator::after {
+	content: "";
+	position: absolute;
+	top: 5px;
+	left: 64px;
+	width: 30px;
+	height: 30px;
+	background-color: transparent;
+	border-radius: 50%;
+	box-shadow: -15px 18px #fff;
+}
+
+.navigation ul li:nth-child(1).active ~ .indicator {
+	transform: translateX(calc(70px * 0));
+}
+
+.navigation ul li:nth-child(2).active ~ .indicator {
+	transform: translateX(calc(70px * 1));
+}
+
+.navigation ul li:nth-child(3).active ~ .indicator {
+	transform: translateX(calc(70px * 2));
+}
+
+.main {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	min-height: 100vh;
+	margin-top: 10vh;
+}
+
+.tabs {
+	max-width: 85vw;
+	padding: 40px 0;
+	border-radius: 20px;
+}
+
+.tabs__controls {
+	display: flex;
+	margin-bottom: 40px ;
+}
+
+.tabs__tab {
+	cursor: pointer;
+}
+
+.tabs__content {
+	overflow: hidden;
+}

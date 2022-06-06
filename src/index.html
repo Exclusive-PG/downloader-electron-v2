@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>YoutubeDownloader</title>
+		<meta charset="UTF-8" />
+		<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	</head>
+
+	<body>
+		<main class="app">
+			<header class="header_app">
+				<nav class="navigation tabs__controls">
+					<ul>
+						<li data-tab="0" class="list tabs__tab active" style="--clr: #f44336">
+							<a
+								><span class="icon"> <ion-icon style="font-size: 30px" name="home-outline"></ion-icon> </span
+							></a>
+						</li>
+						<li data-tab="1" class="list tabs__tab" style="--clr: #ffa117">
+							<a
+								><span class="icon"> <ion-icon style="font-size: 30px" name="logo-youtube"></ion-icon> </span
+							></a>
+						</li>
+						<li data-tab="2" class="list tabs__tab" style="--clr: #0fc70f">
+							<a
+								><span class="icon"> <ion-icon style="font-size: 30px" name="stats-chart-outline"></ion-icon></span
+							></a>
+						</li>
+						<div class="indicator"></div>
+					</ul>
+				</nav>
+			</header>
+			<section class="content_section">
+				<div class="tabs__content">
+					<div class="swiper-wrapper">
+						<!-- <div class="swiper-slide">
+                          HOME
+                      </div> -->
+						<div class="swiper-slide download-page">
+							<div class="video_details">
+								<div class="video_details_wrapper active-player">
+									<div class="poster-container">
+										<img
+											src="https://i.ytimg.com/vi/waAlgFq9Xq8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC9vbdfWE4DBjgetayLHN90HtwZ9w"
+											data-poster-video="none"
+											class="poster-video"
+											alt=""
+										/>
+										<div class="name-video"></div>
+									</div>
+									<div class="video-data">
+										<div class="video_wrapper" style="max-height: 100vh; height: 100%">
+											<video data-video="player" class="video-player" src="D:\\PROJECTS\ElectronSOFT\\youtube-downloader\\downloads\\retro\\Mr.Kitty - After Dark.mp4"></video>
+											<div class="controls-videoplayer">
+												<div class="duration_time">							
+													<span class="current-time">00:00</span>
+													<span>/</span>
+													<span class="duration-video">00:00</span>
+												</div>
+												<div class="volume-container">
+													<div class="volume-icon"><i class="fa-solid fa-volume-high"></i></div>
+													<div class="volume-bar"></div>
+												</div>
+												<div class="timeline-container">
+													<div class="timeline">
+														<img class="preview-img" />
+														<div class="thumb-indicator"></div>
+													</div>
+												</div>
+												<div class="controls">
+													<div class="play-controls">
+														<ion-icon name="play" style="font-size: 30px"></ion-icon>
+													</div>
+													<div class="full-screen-controls" id="full-screen-controls-predownload">
+														<i class="fa-solid fa-expand"></i>
+													</div>
+													<div class="mini-player-controls" id="mini-player-controls-id">
+														<i class="fa-solid fa-window-restore"></i>
+													</div>
+													<div class="rotate-poster-videoplayer" id="rotate-poster-videoplayer">
+														<i class="fa-solid fa-group-arrows-rotate"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="search_zone">
+								<div class="search">
+									<div class="error_msg_search_input"></div>
+									<input type="text" class="search__input searchId" placeholder="Enter video ID..." />
+									<div class="search__icon">
+										<ion-icon name="search"></ion-icon>
+									</div>
+								</div>
+								<div class="btn btn__secondary btn-search">
+									<ion-icon style="font-size: 30px" name="search-outline"></ion-icon>
+								</div>
+							</div>
+
+							<!--download animation-->
+							<div class="download_screen">
+								<div class="dl">
+									<div class="dl-box">
+										<div class="dl-button">
+											<div class="arrow"></div>
+											<div class="basket">
+												<div class="basket-top"></div>
+											</div>
+										</div>
+										<div class="dl-progress">
+											<div class="progress-current"></div>
+											<div class="check">
+												<svg>
+													<use xlink:href="#check" />
+												</svg>
+											</div>
+										</div>
+									</div>
+									<div class="dl-status">
+										<div class="text text-file">Status</div>
+										<div class="text text-number download-data"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">DATA</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<canvas id="canvas" style="z-index: -20; position: fixed; left: 0; top: 0"></canvas>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+		<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+		<script src="https://kit.fontawesome.com/0be2400dbc.js" crossorigin="anonymous"></script>
+		<script>
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+
+			window.onresize = function () {
+				w = ctx.canvas.width = window.innerWidth;
+				h = ctx.canvas.height = window.innerHeight;
+			};
+			window.onresize();
+
+			lines = [];
+
+			conf = {
+				hue: 5,
+				shadow: false,
+				width: 1,
+				length: 1,
+				emitNum: 2,
+				speed: 1,
+				opacity: 0.6,
+				maxLines: 300,
+			};
+
+			bgDots = [
+				{
+					rad: (w + h) / 2,
+					x: w / 2,
+					y: 0,
+					hue: 0,
+				},
+				{
+					rad: (w + h) / 2,
+					x: 0,
+					y: h,
+					hue: -45,
+				},
+				{
+					rad: (w + h) / 2,
+					x: w,
+					y: h,
+					hue: -90,
+				},
+			];
+
+			function emitLine() {
+				if (conf.maxLines < lines.length) return;
+				for (var i = 0; i < conf.emitNum; i++) {
+					var rx = Math.random() * w + 100;
+					var ry = Math.random() * h - 100;
+					lines.push({
+						x1: rx,
+						y1: ry,
+						x2: rx,
+						y2: ry,
+						length: (Math.random() * (260 - 80) + 80) * conf.length,
+						width: (Math.random() * (15 - 5) + 5) * conf.width,
+						v1: (Math.random() * (4 - 2) + 2) * conf.speed,
+						v2: (Math.random() * (1 - 0.5) + 0.5) * conf.speed,
+						half: false,
+						hue: Math.random() * 50,
+					});
+				}
+			}
+
+			function drawBackground() {
+				ctx.globalCompositeOperation = "lighter";
+				for (var i = 0; i < bgDots.length; i++) {
+					var grd = ctx.createRadialGradient(bgDots[i].x, bgDots[i].y, 0, bgDots[i].x, bgDots[i].y, bgDots[i].rad);
+					grd.addColorStop(0, "hsla(" + (conf.hue + bgDots[i].hue) + ", 100%, 60%, 0.3)");
+					grd.addColorStop(1, "hsla(" + (conf.hue + bgDots[i].hue) + ", 100%, 50%, 0)");
+					ctx.beginPath();
+					ctx.arc(bgDots[i].x, bgDots[i].y, bgDots[i].rad, 0, Math.PI * 2);
+					ctx.fillStyle = grd;
+					ctx.fill();
+					ctx.closePath();
+				}
+			}
+
+			function drawLines() {
+				ctx.globalCompositeOperation = "lighter";
+				for (var i = 0; i < lines.length; i++) {
+					ctx.lineWidth = lines[i].width;
+					ctx.beginPath();
+					ctx.moveTo(lines[i].x1, lines[i].y1);
+					ctx.lineTo(lines[i].x2, lines[i].y2);
+					ctx.strokeStyle = "hsla(" + (conf.hue - lines[i].hue) + ", 100%, 50%, " + conf.opacity + ")";
+					ctx.lineCap = "round";
+					ctx.stroke();
+					ctx.closePath();
+
+					if (lines[i].half == false) {
+						lines[i].x1 -= lines[i].v1;
+						lines[i].y1 += lines[i].v1;
+						lines[i].x2 -= lines[i].v2;
+						lines[i].y2 += lines[i].v2;
+						if (dist(lines[i].x1, lines[i].y1, lines[i].x2, lines[i].y2) > lines[i].length) {
+							lines[i].half = true;
+						}
+					} else {
+						lines[i].x1 -= lines[i].v2;
+						lines[i].y1 += lines[i].v2;
+						lines[i].x2 -= lines[i].v1;
+						lines[i].y2 += lines[i].v1;
+					}
+				}
+			}
+
+			function clear() {
+				ctx.globalCompositeOperation = "source-over";
+				ctx.beginPath();
+				ctx.fillStyle = "#000";
+				ctx.fillRect(0, 0, w, h);
+				ctx.closePath();
+			}
+
+			function checkLines() {
+				emitLine();
+				for (var i = 0; i < lines.length; i++) {
+					if (lines[i].half == true && dist(lines[i].x1, lines[i].y1, lines[i].x2, lines[i].y2) <= 10) {
+						lines[i] = lines[lines.length - 1];
+						lines.pop();
+					} else if (lines[i].x1 < 0 && lines[i].x2 < 0 && lines[i].y1 > h && lines[i].y2 > h) {
+						lines[i] = lines[lines.length - 1];
+						lines.pop();
+					}
+				}
+			}
+
+			generateLines = setInterval(checkLines, 10);
+
+			function dist(x1, y1, x2, y2) {
+				return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+			}
+
+			function render() {
+				clear();
+				drawBackground();
+				drawLines();
+				requestAnimationFrame(render);
+			}
+			render();
+		</script>
+	</body>
+</html>
