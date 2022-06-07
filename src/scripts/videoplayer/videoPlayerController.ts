@@ -1,6 +1,7 @@
 import { path } from "../requiredLib";
 import VideoPlayer from "./VideoPlayer";
 import { playControlsAnimations, startVideoPlayerAnimations, stopVideoPlayerAnimations, volumeIconAnimations } from "./videoPlayerControllerAnimation";
+import { ManipulateDOM } from './../manipulateDOM';
 
 const videoElement = document.querySelector<HTMLVideoElement>("[data-video]");
 const poster = document.querySelector<HTMLImageElement>("[data-poster-video]");
@@ -17,6 +18,7 @@ const currentTimeVideoContainer = document.querySelector<HTMLDivElement>(".curre
 const allControlsPlayer = document.querySelector<HTMLDivElement>(".controls-videoplayer");
 const RotatePosterAndVideoPlayer = document.getElementById("rotate-poster-videoplayer")
 export const videoPlayer = new VideoPlayer(videoElement);
+const manipulateDOM = new ManipulateDOM();
 
 //Timeline
 let isScrubbing = false;
@@ -71,6 +73,10 @@ function PlayControls() {
 	videoPlayer.toggle();
 	console.log(videoPlayer.isPlaying);
 	playControlsAnimations(videoPlayer.isPlaying.state);
+
+	if(isRotateMode)
+			rotateMode();
+
 }
 
 export const setPoster = (thumbnails: any) => {
@@ -156,17 +162,13 @@ RotatePosterAndVideoPlayer.addEventListener("click",()=> {
 })
 
 function rotateMode(){
-	playControlsAnimations(videoPlayer.isPlaying.state)
 	if(isRotateMode){
-	RotatePosterAndVideoPlayer.style.color = "#f34336"
 	videoPlayer.isPlaying.state ? startVideoPlayerAnimations() : stopVideoPlayerAnimations();
-	}else{
-		RotatePosterAndVideoPlayer.style.color = "#fff"
 	}
 }
 
 function activeRotateMode(){
-	isRotateMode ? RotatePosterAndVideoPlayer.style.color = "#f34336" : RotatePosterAndVideoPlayer.style.color = "#fff"
+	 manipulateDOM.toggleClass("rotate-poster-videoplayer","rotate_mode_active")
 }
 //EVENTS BINDING
 
@@ -176,12 +178,12 @@ poster.addEventListener("click", PlayControls);
 
 playControls.addEventListener("click", PlayControls);
 
-FullScreenControls.addEventListener("click", toggleFullScreenMode);
+FullScreenControls.addEventListener("click",  toggleFullScreenMode);
 
 PictureInPictureControls.addEventListener("click", togglePictureInPictureMode);
 
-videoElement.addEventListener("play", rotateMode);
-videoElement.addEventListener("pause",  rotateMode);
+videoElement.addEventListener("play", ()=>playControlsAnimations(videoPlayer.isPlaying.state));
+videoElement.addEventListener("pause",  ()=>playControlsAnimations(videoPlayer.isPlaying.state));
 
 
 videoElement.addEventListener("click", PlayControls);
@@ -220,3 +222,14 @@ document.addEventListener("mouseup", (e) => {
 });
 
 VolumeContainer.addEventListener("mousemove", handeVolumeUpdate);
+
+document.addEventListener("load",()=>{
+	console.log("app is loaded")
+})
+
+
+
+document.addEventListener("fullscreenchange", function() {
+	console.log("change full screen")
+	document.fullscreenElement === null  ? document.querySelector<HTMLDivElement>(".controls").style.left = "15%" : document.querySelector<HTMLDivElement>(".controls").style.left = "2%"
+  });

@@ -8,4 +8,8 @@ export class ManipulateDOM {
         element.style.pointerEvents = stateElement.state ? "auto" : "none"
         
     }
+
+    public toggleClass(element:string,className:string):void {
+        document.querySelector<HTMLElement>(`.${element}`).classList.toggle(className)
+    }
 }

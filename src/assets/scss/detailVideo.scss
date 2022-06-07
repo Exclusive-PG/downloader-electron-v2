@@ -95,7 +95,7 @@ video::-webkit-media-controls {
 	transition: 0.3s all;
 	position: absolute;
 	top: 88%;
-	left: 2%;
+	left: 15%;
 	display: flex;
 	width: 100%;
 	justify-content: center;
@@ -265,4 +265,9 @@ video::-webkit-media-controls {
 	position: absolute;
 	left: 18px;
 	bottom: 2%;
+}
+
+.rotate_mode_active{
+	color: #f34336 ;
+	animation: rotateModel 3s infinite ease-in-out; 
 }
