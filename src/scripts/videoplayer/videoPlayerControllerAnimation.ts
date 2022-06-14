@@ -6,7 +6,9 @@ const videoPlayerAnimation = new AnimationContoller(videoWrapper);
 const playControls = document.querySelector<HTMLDivElement>(".play-controls");
 const sizeControls = 30;
 const VolumeIcon = document.querySelector<HTMLDivElement>(".volume-icon");
+const repeatModeOne = document.querySelector<HTMLDivElement>(".repeat-mode:after");
 export const startVideoPlayerAnimations = () => {
+
 	videoPlayerAnimation.StartAnimation(activePlayerClass);
 };
 
@@ -33,3 +35,7 @@ export const volumeIconAnimations = (volume: number) => {
 			break;
     }
 };
+
+export const repeatModeOff = (mode: string) => {
+
+}

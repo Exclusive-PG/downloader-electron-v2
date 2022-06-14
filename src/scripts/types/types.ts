@@ -6,3 +6,8 @@ export type validateYotubeLinkType = {
 export type toggleElement = {
     state:boolean
 }
+export type repeatMode = {
+	repeatOne?:boolean
+	repeatAll?:boolean
+	repeatOff?:boolean
+}

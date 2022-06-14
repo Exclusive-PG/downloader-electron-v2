@@ -271,3 +271,19 @@ video::-webkit-media-controls {
 	color: #f34336 ;
 	animation: rotateModel 3s infinite ease-in-out; 
 }
+
+
+.repeat-one-mode{
+	position: absolute;
+}
+:root{
+	--show-repeat-one-mode:none;
+}
+.repeat-mode::after{
+	content: "1";
+	position: relative;
+	color: #fff;
+	bottom: 0;
+	
+	display: var(--show-repeat-one-mode);
+}
