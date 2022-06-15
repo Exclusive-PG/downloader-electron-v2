@@ -3,16 +3,20 @@ import { repeatMode } from "../types/types";
 export default class VideoPlayer {
 	private player: HTMLVideoElement;
 	private repeatModeConfig: repeatMode;
+	private listSrcVideos: Array<string>;
 
 	constructor(player: HTMLVideoElement) {
 		this.player = player;
 		this.player.volume = 0.5;
-		console.log(this.player);
 		this.repeatModeConfig = {
 			repeatOne: true,
 			repeatAll: false,
 			repeatOff: false,
 		};
+
+		this.listSrcVideos = [];
+
+		console.log(this.player);
 	}
 
 	public play() {
@@ -60,11 +64,15 @@ export default class VideoPlayer {
 			console.log("repeat one time");
 		}
 
-        if (repeatAll) {
-            console.log("repeat all list");
-        }
-    
+		if (repeatAll) {
+			if (this.listSrcVideos.length === 0) return;
 
+			console.log("repeat all list");
+		}
+
+		if (repeatOff) {
+			console.log("repeat off");
+		}
 
 		console.log(this.repeatModeConfig);
 	}

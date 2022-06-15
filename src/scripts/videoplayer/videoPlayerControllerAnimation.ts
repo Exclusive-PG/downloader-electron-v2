@@ -6,7 +6,8 @@ const videoPlayerAnimation = new AnimationContoller(videoWrapper);
 const playControls = document.querySelector<HTMLDivElement>(".play-controls");
 const sizeControls = 30;
 const VolumeIcon = document.querySelector<HTMLDivElement>(".volume-icon");
-const repeatModeOne = document.querySelector<HTMLDivElement>(".repeat-mode:after");
+const repeatModeOne = document.querySelector<HTMLDivElement>(":root");
+const repeatModeBtn = document.querySelector<HTMLDivElement>(".repeat-mode");
 export const startVideoPlayerAnimations = () => {
 
 	videoPlayerAnimation.StartAnimation(activePlayerClass);
@@ -36,6 +37,15 @@ export const volumeIconAnimations = (volume: number) => {
     }
 };
 
-export const repeatModeOff = (mode: string) => {
-
+export const repeatModeOffAnimation = () => {
+	repeatModeOne.style.setProperty("--show-repeat-one-mode","none");
+	repeatModeBtn.style.color = `#fff`
+}
+export const repeatModeOneAnimation  = () => {
+	repeatModeOne.style.setProperty("--show-repeat-one-mode","inline-block");
+	repeatModeBtn.style.color = `#fff`
+}
+export const repeatModeAllAnimation  = () => {
+	repeatModeOne.style.setProperty("--show-repeat-one-mode","none");
+	repeatModeBtn.style.color = `#f34336`
 }

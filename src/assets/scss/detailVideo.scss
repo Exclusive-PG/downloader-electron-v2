@@ -77,7 +77,7 @@ video::-webkit-media-controls {
 	border-radius: 10px;
 	object-fit: fill;
 	transition: 0.2s all;
-	
+
 	// &:hover{
 	// 	cursor: pointer;
 	// }
@@ -108,7 +108,7 @@ video::-webkit-media-controls {
 			transform: scale(1.2) translateY(-5px);
 		}
 
-		i{
+		i {
 			font-size: 22px;
 		}
 	}
@@ -267,23 +267,21 @@ video::-webkit-media-controls {
 	bottom: 2%;
 }
 
-.rotate_mode_active{
-	color: #f34336 ;
-	animation: rotateModel 3s infinite ease-in-out; 
+.rotate_mode_active {
+	color: #f34336;
+	animation: rotateModel 3s infinite ease-in-out;
 }
 
-
-.repeat-one-mode{
+.repeat-one-mode {
 	position: absolute;
 }
-:root{
-	--show-repeat-one-mode:none;
+:root {
+	--show-repeat-one-mode: inline-block;
 }
-.repeat-mode::after{
+.repeat-mode::after {
+	color: #f34336;
 	content: "1";
 	position: relative;
-	color: #fff;
 	bottom: 0;
-	
 	display: var(--show-repeat-one-mode);
 }

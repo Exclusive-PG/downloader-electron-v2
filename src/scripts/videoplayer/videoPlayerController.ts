@@ -1,6 +1,14 @@
 import { path } from "../requiredLib";
 import VideoPlayer from "./VideoPlayer";
-import { playControlsAnimations, startVideoPlayerAnimations, stopVideoPlayerAnimations, volumeIconAnimations } from "./videoPlayerControllerAnimation";
+import {
+	playControlsAnimations,
+	repeatModeAllAnimation,
+	repeatModeOffAnimation,
+	repeatModeOneAnimation,
+	startVideoPlayerAnimations,
+	stopVideoPlayerAnimations,
+	volumeIconAnimations,
+} from "./videoPlayerControllerAnimation";
 import { ManipulateDOM } from "./../manipulateDOM";
 
 const videoElement = document.querySelector<HTMLVideoElement>("[data-video]");
@@ -181,8 +189,16 @@ const repeatModeSwitcher = () => {
 	isStatus && repeatControls.setAttribute("data-state-repeat-mode", STATE[currentState]);
 	console.log(STATE[currentState]);
 
-	if (STATE[currentState] === repeatOne) {
-		document.querySelector<HTMLDivElement>(":root").style.setProperty("--show-repeat-one-mode","inline-block");
+	switch (STATE[currentState]) {
+		case repeatOne:
+			repeatModeOneAnimation();
+			break;
+		case repatAll:
+			repeatModeAllAnimation();
+			break;
+		case repeatOff:
+			repeatModeOffAnimation();
+			break;
 	}
 };
 // UI hide or show
@@ -220,8 +236,11 @@ videoElement.addEventListener("ended", () => {
 				break;
 
 			case videoPlayer.VariablesForRepeatMode.repatAll:
-				console.log("repatAll MODE SWITCH CASE");
 				videoPlayer.setRepeatMode({ repeatAll: true });
+				break;
+
+			case videoPlayer.VariablesForRepeatMode.repeatOff:
+				videoPlayer.setRepeatMode({ repeatOff: true });
 				break;
 		}
 
