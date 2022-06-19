@@ -1,0 +1,12 @@
+
+.settings-download-video{
+    position: fixed;
+    right: 80px;
+    bottom: 80px;
+    transition: .3s all;
+    cursor: pointer;
+        &:hover{
+            animation: rotateModel .5s ease-in-out;
+            color: $MAIN_RED_COLOR;
+        }
+}

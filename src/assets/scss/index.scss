@@ -3,7 +3,7 @@
 @import "./header";
 @import "./downloadPage";
 @import "./downloadLoading";
-
+@import "./settings-download-video";
 *{
     box-sizing: border-box;
     padding: 0;
@@ -12,7 +12,7 @@
 
 
 body{
-    min-height: 100vh;
+    max-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     overflow:hidden;
 }

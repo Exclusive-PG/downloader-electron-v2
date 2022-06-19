@@ -192,7 +192,7 @@ video::-webkit-media-controls {
 		top: 0;
 		bottom: 0;
 		right: calc(100% - var(--progress-position) * 100%);
-		background-color: #f34336;
+		background-color: $MAIN_RED_COLOR;
 		display: block;
 	}
 }
@@ -204,7 +204,7 @@ video::-webkit-media-controls {
 	top: -20%;
 	transform: translateX(-50%) scale(var(--scale));
 	left: calc(var(--progress-position) * 100%);
-	background-color: #f34336;
+	background-color: $MAIN_RED_COLOR;
 	border-radius: 50%;
 	transition: transform 0.15s ease-in-out;
 	aspect-ratio: 1/1;
@@ -244,7 +244,7 @@ video::-webkit-media-controls {
 		height: calc(var(--progress-volume, 0.5) * 100%);
 		width: 100%;
 		border-radius: 20px;
-		background-color: #f34336;
+		background-color: $MAIN_RED_COLOR;
 	}
 }
 
@@ -268,7 +268,7 @@ video::-webkit-media-controls {
 }
 
 .rotate_mode_active {
-	color: #f34336;
+	color: $MAIN_RED_COLOR;
 	animation: rotateModel 3s infinite ease-in-out;
 }
 
@@ -279,7 +279,7 @@ video::-webkit-media-controls {
 	--show-repeat-one-mode: inline-block;
 }
 .repeat-mode::after {
-	color: #f34336;
+	color: $MAIN_RED_COLOR;
 	content: "1";
 	position: relative;
 	bottom: 0;

@@ -65,9 +65,9 @@
    place-items: center;
    min-height: fit-content;
    height: auto;
-   min-height: 50vh;
-  padding-bottom: 50vh;
-  
+  // min-height: 50vh;
+  //padding-bottom: 50vh;
+  min-height: calc(100vh - 15%)
 }
 
 .btn {
@@ -101,11 +101,10 @@
   }
 
   .search_zone{
-      margin-top: 50px;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 200px;
+      margin-bottom: 200px;
       
   }
 
