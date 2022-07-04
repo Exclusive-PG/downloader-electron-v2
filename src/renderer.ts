@@ -2,7 +2,7 @@
 import  "./scripts/headerController"
 import "./assets/scss/index"
 import "./scripts/downloadVideo"
-import { path } from "./scripts/requiredLib"
+import "./scripts/settings/config-settings-controller.ts"
 
 
 

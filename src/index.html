@@ -5,6 +5,8 @@
 		<meta charset="UTF-8" />
 		<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" /> -->
+
 	</head>
 
 	<body>
@@ -53,7 +55,7 @@
 										<div class="video_wrapper" style="max-height: 100vh; height: 100%">
 											<video data-video="player" class="video-player" src="D:\\PROJECTS\ElectronSOFT\\youtube-downloader\\downloads\\retro\\Mr.Kitty - After Dark.mp4"></video>
 											<div class="controls-videoplayer">
-												<div class="duration_time">							
+												<div class="duration_time">
 													<span class="current-time">00:00</span>
 													<span>/</span>
 													<span class="duration-video">00:00</span>
@@ -81,7 +83,7 @@
 													<div class="rotate-poster-videoplayer rotate_mode_active" id="rotate-poster-videoplayer">
 														<i class="fa-solid fa-group-arrows-rotate"></i>
 													</div>
-													<div class="repeat-mode" id="repeat-mode" data-state-repeat-mode = "repeat-one">
+													<div class="repeat-mode" id="repeat-mode" data-state-repeat-mode="repeat-one">
 														<i class="fa-solid fa-repeat"></i>
 														<!-- <div class="repeat-one-mode">1</div> -->
 													</div>
@@ -89,7 +91,6 @@
 											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
 
@@ -131,17 +132,37 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="settings-download-video">
-								<div class="settings_wrapper">
-									<i class="fa-solid fa-gear fa-2x"></i>
-								</div>
-							</div>
 						</div>
 						<div class="swiper-slide">DATA</div>
 					</div>
 				</div>
-				
+			</section>
+			<section class="settings">
+				<div class="settings-download-video">
+					<div class="btns_controller">
+						<div class="settings_wrapper">
+							<i class="fa-solid fa-gear fa-2x"></i>
+						</div>
+					</div>
+					<div class="settings_panel">
+						<div class="content_block_settings">
+							<div class="change_current_config">
+								<div class="input-field col s6" >
+									<input id="dirSave" type="text" class="validate input-config" data-input-config="dirSave"/>
+									<label for="dirSave">Directory name</label>
+								</div>
+								<div class="input-field col s6" >
+									<input id="playlist" type="text" class="validate input-config" data-input-config="playlist"/>
+									<label for="playlist">Playlist name</label>
+								</div>
+								<div class="input-field col s6" >
+									<input id="format" type="text" class="validate input-config" data-input-config="format"/>
+									<label for="format">Format video</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</section>
 		</main>
 		<canvas id="canvas" style="z-index: -20; position: fixed; left: 0; top: 0"></canvas>

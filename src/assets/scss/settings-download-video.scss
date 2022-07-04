@@ -1,12 +1,76 @@
-
-.settings-download-video{
-    position: fixed;
-    right: 80px;
-    bottom: 80px;
-    transition: .3s all;
-    cursor: pointer;
-        &:hover{
-            animation: rotateModel .5s ease-in-out;
-            color: $MAIN_RED_COLOR;
-        }
+.settings{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    max-width: $MAX_WIDTH_APP;
+    max-height: $MAX_HEIGHT_APP;
+    width: 100%;
+    height: 100vh;
 }
+
+.btns_controller {
+	position: fixed;
+	right: 80px;
+	bottom: 80px;
+	transition: 0.3s all;
+   
+	cursor: pointer;
+	&:hover {
+		animation: rotateModel 0.5s ease-in-out;
+		color: $MAIN_RED_COLOR;
+	}
+}
+
+.content_block_settings {
+    z-index: 10;
+	max-width: 800px;
+	max-height: 900px;
+    min-height: 600px;
+	height: auto;
+	width: 100%;
+	background-color: $MAIN_RED_COLOR;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+
+.content_block_settings.hide{
+    display: none;
+}
+
+//SETTINGS INPUT FIELDS
+
+  /* label color */
+  
+  .input-field label {
+    color: #fff;
+  }
+  /* label focus color */
+  .input-field input[type=text]:focus + label {
+    color: #fff !important;
+
+  }
+  /* label underline focus color */
+  .input-field input[type=text]:focus {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+  }
+  /* valid color */
+  .input-field input[type=text].valid {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+  }
+  /* invalid color */
+  .input-field input[type=text].invalid {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+  }
+  /* icon prefix focus color */
+  .input-field .prefix.active {
+    color: #fff;
+  }
+
+    

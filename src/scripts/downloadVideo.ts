@@ -4,8 +4,8 @@ import { AnimationContoller, AnimationDownloadingContoller } from "./animations/
 import { path, ytdl, fs } from "./requiredLib";
 import { validateYotubeLinkType } from "./types/types";
 import { ManipulateDOM } from "./manipulateDOM";
-import { startVideoPlayerAnimations, stopVideoPlayerAnimations } from "./videoplayer/videoPlayerControllerAnimation";
 import { disabledVideoPlayer, enabledVideoPlayer, setPoster, videoPlayer } from "./videoplayer/videoPlayerController";
+import { configSetup } from './../config/currentConfig';
 
 const OUPUT_DATA_PERCENT_DOWNLOAD = document.querySelector<HTMLDivElement>(".download-data");
 const INPUT_FIELD_FOR_VIDEO_ID = document.querySelector<HTMLInputElement>(".searchId");
@@ -14,7 +14,7 @@ const ANIMATION_ELEMENT = document.querySelector<HTMLDivElement>(".dl");
 const SEARCH_BUTTON = document.querySelector<HTMLDivElement>(".btn-search");
 const YOUTUBE_VALIDATE_LINK = "https://www.youtube.com/watch?v=";
 const SEPARATE_SYMBOLS = "v=";
-const configSetup = new Config();
+
 const animationDownloadingContoller = new AnimationDownloadingContoller(ANIMATION_ELEMENT);
 const downloadScreen = new AnimationContoller(document.querySelector(".download_screen"));
 const incorrectUrlOrId = new AnimationContoller(document.querySelector(".search__input"));

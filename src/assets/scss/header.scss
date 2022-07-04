@@ -2,6 +2,7 @@
 	width: 100%;
 	background-color: transparent;
 	height: 159px;
+	
 }
 
 
@@ -14,7 +15,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	
+	z-index:11;
 	border-top-right-radius:40px;
 	border-top-left-radius: 40px;
 	ul {
