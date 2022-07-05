@@ -333,12 +333,14 @@
     width:100%;
   }
 
+
   .download_screen{
+    z-index: 100;
     position: absolute;
     left: 0;
     top:-100% ;
     width: 100%;
-    height: 85%;
+    height: 100%;
     background-color: rgba(#1E1E1E, 1);
     transition: .5s all;
     display: grid;

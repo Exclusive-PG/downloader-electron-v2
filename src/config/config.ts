@@ -12,6 +12,11 @@ let _defaultConfig : ConfigType = {
 	dirSave : "downloads",
 	playlist : "retro"
 }
+let _defaultConfig1 : ConfigType = {
+	format : ".mp4",
+	dirSave : "downloads",
+	playlist : "retro"
+}
 
 export default class Config {
 
@@ -34,7 +39,9 @@ export default class Config {
 			config: this.config
 		};
 	}
-
+	public setConfig(config: ConfigType) {
+		this.config = config;
+	}
 	public createDirectory(path: string = this.config.dirSave){
 		if(!fs.existsSync(path)){
 			fs.mkdirSync(path);
