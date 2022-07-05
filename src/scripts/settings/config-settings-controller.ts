@@ -4,6 +4,8 @@ import { ManipulateDOM } from './../manipulateDOM';
 
 const collectionInputsConfig = document.querySelectorAll(".input-config")
 const ConfigPanel = document.querySelector<HTMLDivElement>(".content_block_settings")
+const cancelBtn = document.querySelector<HTMLDivElement>(".cancel-config-btn")
+const openSettingsBtn = document.querySelector<HTMLDivElement>(".settings_wrapper")
 const manipulateDOM = new ManipulateDOM()
 
 console.log(configSetup)
@@ -26,11 +28,13 @@ const fillInput = () =>{
       
     })
 }
+const toggleSettingsPanel = ()=>{
+     manipulateDOM.toggleClass("settings_panel","hide")
+}
+
+
+
+cancelBtn.addEventListener("click",toggleSettingsPanel)
+openSettingsBtn.addEventListener("click",toggleSettingsPanel)
 
 fillInput()
-
-
-document.querySelector(".settings_wrapper").addEventListener("click",()=>{
-    //if(!ConfigPanel.classList.contains("hide"))
-    manipulateDOM.toggleClass("content_block_settings","hide")
-})

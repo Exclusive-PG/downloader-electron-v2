@@ -1,20 +1,26 @@
-.settings{
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 10;
-    max-width: $MAX_WIDTH_APP;
-    max-height: $MAX_HEIGHT_APP;
-    width: 100%;
-    height: 100vh;
+$zIndexPanel: 12;
+$zIndexBtns: 13;
+.settings_panel {
+	position: absolute;
+	left: 0;
+	top: 0;
+	max-width: $MAX_WIDTH_APP;
+	max-height: $MAX_HEIGHT_APP;
+	width: 100%;
+	height: 100vh;
+	font-family: Arial, Helvetica, sans-serif;
+	z-index: $zIndexPanel;
 }
 
+.settings_panel.hide {
+	display: none;
+}
 .btns_controller {
 	position: fixed;
 	right: 80px;
 	bottom: 80px;
 	transition: 0.3s all;
-   
+	z-index: $zIndexBtns;
 	cursor: pointer;
 	&:hover {
 		animation: rotateModel 0.5s ease-in-out;
@@ -23,54 +29,131 @@
 }
 
 .content_block_settings {
-    z-index: 10;
-	max-width: 800px;
+	max-width: 900px;
 	max-height: 900px;
-    min-height: 600px;
+	min-height: 600px;
 	height: auto;
 	width: 100%;
-	background-color: $MAIN_RED_COLOR;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
+	background-color: #f3f3f3;
+	border-radius: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
-.content_block_settings.hide{
-    display: none;
+.input-config {
+	width: 20.4rem;
+	height: 4rem;
+	border: none;
+	border-radius: 1rem;
+	font-size: 1.4rem;
+	padding-left: 1.4rem;
+	box-shadow: $inner-shadow;
+	background: none;
+	font-family: inherit;
+	color: var(--greyDark);
+
+	&::placeholder {
+		color: var(--greyLight-3);
+	}
+	&:focus {
+		outline: none;
+		box-shadow: $shadow;
+	}
 }
 
+.change_current_config {
+	padding: 30px;
+}
+
+/*  BUTTONS  */
+
+.btns-wrapper-current-config {
+	display: flex;
+	justify-content: right;
+	flex-direction: row-reverse;
+	align-items: center;
+	height: auto;
+	margin-top: 90px;
+	.btn-settings {
+		margin-right: 20px;
+	}
+}
+
+.btn-settings {
+	width: 15rem;
+	height: 4rem;
+	border-radius: 1rem;
+	box-shadow: $shadow;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: 0.3s ease;
+
+	&__primary-settings {
+		background: var(--primary);
+		box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light), inset -0.2rem -0.2rem 1rem var(--primary-dark), $shadow;
+		color: var(--greyLight-1);
+
+		&:hover {
+			color: var(--white);
+		}
+		&:active {
+			box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-dark), inset -0.2rem -0.2rem 1rem var(--primary-light);
+		}
+	}
+
+	&__secondary-settings {
+		color: var(--greyDark);
+		&:hover {
+			color: var(--primary);
+		}
+		&:active {
+			box-shadow: $inner-shadow;
+		}
+	}
+
+	p {
+		font-size: 1.6rem;
+	}
+}
 //SETTINGS INPUT FIELDS
 
-  /* label color */
-  
-  .input-field label {
-    color: #fff;
-  }
-  /* label focus color */
-  .input-field input[type=text]:focus + label {
-    color: #fff !important;
+/* label color */
+.input-field {
+	display: flex;
+	flex-direction: column-reverse;
+}
 
-  }
-  /* label underline focus color */
-  .input-field input[type=text]:focus {
-    border-bottom: 1px solid #fff;
-    box-shadow: 0 1px 0 0 #fff;
-  }
-  /* valid color */
-  .input-field input[type=text].valid {
-    border-bottom: 1px solid #fff;
-    box-shadow: 0 1px 0 0 #fff;
-  }
-  /* invalid color */
-  .input-field input[type=text].invalid {
-    border-bottom: 1px solid #fff;
-    box-shadow: 0 1px 0 0 #fff;
-  }
-  /* icon prefix focus color */
-  .input-field .prefix.active {
-    color: #fff;
-  }
+.input-field label {
+	color: $MAIN_RED_COLOR;
+	margin-top: 35px;
+	margin-bottom: 5px;
+}
 
-    
+/* label focus color */
+.input-field input[type="text"]:focus + label {
+	color: $MAIN_RED_COLOR !important;
+}
+/* label underline focus color */
+.input-field input[type="text"]:focus {
+	border-bottom: 1px solid #fff;
+	box-shadow: 0 1px 0 0 #fff;
+}
+/* valid color */
+.input-field input[type="text"].valid {
+	border-bottom: 1px solid #fff;
+	box-shadow: 0 1px 0 0 #fff;
+}
+/* invalid color */
+.input-field input[type="text"].invalid {
+	border-bottom: 1px solid #fff;
+	box-shadow: 0 1px 0 0 #fff;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+	color: #fff;
+}

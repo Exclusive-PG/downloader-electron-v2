@@ -6,7 +6,6 @@
 		<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" /> -->
-
 	</head>
 
 	<body>
@@ -147,17 +146,23 @@
 					<div class="settings_panel">
 						<div class="content_block_settings">
 							<div class="change_current_config">
-								<div class="input-field col s6" >
-									<input id="dirSave" type="text" class="validate input-config" data-input-config="dirSave"/>
-									<label for="dirSave">Directory name</label>
+								<div class="inputs_wrapper_current_config">
+									<div class="input-field col s6">
+										<input id="dirSave" type="text" class="input-config" data-input-config="dirSave" />
+										<label for="dirSave">Directory name</label>
+									</div>
+									<div class="input-field col s6">
+										<input id="playlist" type="text" class="input-config" data-input-config="playlist" />
+										<label for="playlist">Playlist name</label>
+									</div>
+									<div class="input-field col s6">
+										<input id="format" type="text" class="input-config" data-input-config="format" />
+										<label for="format">Format video</label>
+									</div>
 								</div>
-								<div class="input-field col s6" >
-									<input id="playlist" type="text" class="validate input-config" data-input-config="playlist"/>
-									<label for="playlist">Playlist name</label>
-								</div>
-								<div class="input-field col s6" >
-									<input id="format" type="text" class="validate input-config" data-input-config="format"/>
-									<label for="format">Format video</label>
+								<div class="btns-wrapper-current-config">
+									<div class="btn-settings btn-settings__primary-settings"><p>OK</p></div>
+									<div class="btn-settings btn-settings__secondary-settings cancel-config-btn"><p>Cancel</p></div>
 								</div>
 							</div>
 						</div>
