@@ -1,7 +1,7 @@
 import { videoInfo } from "ytdl-core"
 import { fs, path } from "../scripts/requiredLib"
 
-type ConfigType = {
+export type ConfigType = {
 	dirSave:string
 	format:string
 	playlist:string

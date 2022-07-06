@@ -1,21 +1,20 @@
+
 import { configSetup } from './../../config/currentConfig';
 import { ManipulateDOM } from './../manipulateDOM';
 
 
-const collectionInputsConfig = document.querySelectorAll(".input-config")
+const collectionInputsConfig = document.querySelectorAll<HTMLInputElement>(".input-config")
 const ConfigPanel = document.querySelector<HTMLDivElement>(".content_block_settings")
 const cancelBtn = document.querySelector<HTMLDivElement>(".cancel-config-btn")
 const openSettingsBtn = document.querySelector<HTMLDivElement>(".settings_wrapper")
 const confirmConfigBtn = document.querySelector<HTMLDivElement>(".confirm-config-btn")
 const manipulateDOM = new ManipulateDOM()
 
-console.log(configSetup)
-console.log(collectionInputsConfig)
-console.log(Object.keys(configSetup.configDownloadFiles.config))
+const keys = Object.keys(configSetup.configDownloadFiles.config );
+const values = Object.values(configSetup.configDownloadFiles.config);
+
 const fillInput = () =>{
     
-    const keys = Object.keys(configSetup.configDownloadFiles.config);
-    const value = Object.values(configSetup.configDownloadFiles.config);
 
     collectionInputsConfig.forEach((item: HTMLInputElement,indexInput:number)=>{
     
@@ -23,7 +22,7 @@ const fillInput = () =>{
             if(item.getAttribute("data-input-config") === keys[i]){
                 
                 console.log(`${item.getAttribute("data-input-config")} = ${keys[i]}`)
-                item.value = value[i]
+                item.value = values[i]
             }
         }
       
@@ -35,9 +34,33 @@ const toggleSettingsPanel = ()=>{
 }
 
 
+const addEventForChangeInputs = () =>{
+    
+    collectionInputsConfig.forEach((item: HTMLInputElement)=>{
+        item.addEventListener("input",(e:Event)=>{
+            let currentAttr = item.getAttribute("data-input-config")
+          
+            let copyConfig:any = configSetup.configDownloadFiles.config;
+
+            if(copyConfig[currentAttr] === item.value){
+                item.setAttribute("data-change","false")
+            }else{
+                item.setAttribute("data-change","true")
+            }
+            confirmConfigBtn.innerHTML = "<p>OK</p>"
+            for (const iterator of collectionInputsConfig) {
+                if(iterator.getAttribute("data-change") === "true"){
+                    confirmConfigBtn.innerHTML = "<p>Apply</p>"
+                }
+            }
+        })
+    }
+    )
+}
+
 
 fillInput()
-
+addEventForChangeInputs()
 cancelBtn.addEventListener("click",toggleSettingsPanel)
 openSettingsBtn.addEventListener("click",toggleSettingsPanel)
 
