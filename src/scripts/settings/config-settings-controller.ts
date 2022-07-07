@@ -64,9 +64,9 @@ const toggleIconLock = (sizeIconLock:number)=>{
     for (let index = 0; index < collectionInputsConfig.length; index++) {
        
         if(collectionInputsConfig[index].disabled){
-            collectionStatusInput[index].innerHTML = `<i style="color:${COLOR_ICON_LOCK_CLOSE}" class="fa-solid fa-lock fa-${2}x"></i>`
+            collectionStatusInput[index].innerHTML = `<i style="color:${COLOR_ICON_LOCK_CLOSE}" class="fa-solid fa-lock fa-${sizeIconLock}x"></i>`
         }else{
-            collectionStatusInput[index].innerHTML = `<i style="color:${COLOR_ICON_LOCK_OPEN}" class="fa-solid fa-lock-open fa-${2}x"></i>`
+            collectionStatusInput[index].innerHTML = `<i style="color:${COLOR_ICON_LOCK_OPEN}" class="fa-solid fa-lock-open fa-${sizeIconLock}x"></i>`
         }
     
 }
