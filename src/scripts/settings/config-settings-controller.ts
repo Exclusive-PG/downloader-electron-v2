@@ -4,6 +4,7 @@ import { ManipulateDOM } from './../manipulateDOM';
 
 
 const collectionInputsConfig = document.querySelectorAll<HTMLInputElement>(".input-config")
+const collectionStatusInput = document.querySelectorAll<HTMLSpanElement>(".status-input-lock")
 const ConfigPanel = document.querySelector<HTMLDivElement>(".content_block_settings")
 const cancelBtn = document.querySelector<HTMLDivElement>(".cancel-config-btn")
 const openSettingsBtn = document.querySelector<HTMLDivElement>(".settings_wrapper")
@@ -35,6 +36,7 @@ const toggleSettingsPanel = ()=>{
 
 
 const addEventForChangeInputs = () =>{
+
     
     collectionInputsConfig.forEach((item: HTMLInputElement)=>{
         item.addEventListener("input",(e:Event)=>{
@@ -42,11 +44,8 @@ const addEventForChangeInputs = () =>{
           
             let copyConfig:any = configSetup.configDownloadFiles.config;
 
-            if(copyConfig[currentAttr] === item.value){
-                item.setAttribute("data-change","false")
-            }else{
-                item.setAttribute("data-change","true")
-            }
+            copyConfig[currentAttr] === item.value ? item.setAttribute("data-change","false") : item.setAttribute("data-change","true")
+
             confirmConfigBtn.innerHTML = "<p>OK</p>"
             for (const iterator of collectionInputsConfig) {
                 if(iterator.getAttribute("data-change") === "true"){
@@ -58,9 +57,26 @@ const addEventForChangeInputs = () =>{
     )
 }
 
+const toggleIconLock = (sizeIconLock:number)=>{
+    const COLOR_ICON_LOCK_CLOSE = `#f34336`
+    const COLOR_ICON_LOCK_OPEN = `#2ECC71`
+    
+    for (let index = 0; index < collectionInputsConfig.length; index++) {
+       
+        if(collectionInputsConfig[index].disabled){
+            collectionStatusInput[index].innerHTML = `<i style="color:${COLOR_ICON_LOCK_CLOSE}" class="fa-solid fa-lock fa-${2}x"></i>`
+        }else{
+            collectionStatusInput[index].innerHTML = `<i style="color:${COLOR_ICON_LOCK_OPEN}" class="fa-solid fa-lock-open fa-${2}x"></i>`
+        }
+    
+}
+}
+
 
 fillInput()
+toggleIconLock(2)
 addEventForChangeInputs()
+
 cancelBtn.addEventListener("click",toggleSettingsPanel)
 openSettingsBtn.addEventListener("click",toggleSettingsPanel)
 
@@ -69,8 +85,6 @@ confirmConfigBtn.addEventListener("click",()=>{
     collectionInputsConfig.forEach((item: HTMLInputElement)=>{
         tempConfig[item.getAttribute("data-input-config")] = item.value
     })
-    console.log(`tempConfig`)
-    console.log(tempConfig)
     configSetup.setConfig(tempConfig)
     console.log("main config")
     console.log(configSetup.configDownloadFiles.config)
