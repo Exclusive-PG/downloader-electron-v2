@@ -61,5 +61,14 @@ export default class Config {
 		const {dirSave,playlist,format} = this.config;
 		return path.join(dirSave,playlist,`${videoData.videoDetails.title}${format}`)
 	}
+
+	public validateFileName(fileName: string) : boolean {
+		let rg1=/^[^\\/:\*\?"<>\|]+$/; // forbidden characters \ / : * ? " < > |
+		let rg2=/^\./; // cannot start with dot (.)
+		let rg3=/^(nul|prn|con|lpt[0-9]|com[0-9])(\.|$)/i; // forbidden file names
+
+		return rg1.test(fileName) && !rg2.test(fileName) && !rg3.test(fileName);
+
+	}
 }
 

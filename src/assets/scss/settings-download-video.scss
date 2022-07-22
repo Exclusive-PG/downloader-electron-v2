@@ -120,6 +120,15 @@ $zIndexBtns: 13;
 		font-size: 1.6rem;
 	}
 }
+//error icon
+
+.error-input-current_config{
+	margin-left: 10px;
+	color: $MAIN_RED_COLOR;
+}
+.error-input-current_config.hide{
+	display: none;
+}
 
 //LOCK STATUS
 .status-input-lock{
