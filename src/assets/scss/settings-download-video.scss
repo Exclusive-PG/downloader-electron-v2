@@ -120,18 +120,38 @@ $zIndexBtns: 13;
 		font-size: 1.6rem;
 	}
 }
+//headline block
+
+.headline_wrapper_block_settings {
+	margin: 20px 0 0 20px;
+	color: var(--greyDark);
+	font-family: Arial, Helvetica, sans-serif;
+	display: flex;
+	justify-content: space-between;
+}
+
+.icons_mode_settings {
+	margin-right: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	span {
+		margin: 10px;
+	}
+}
 //error icon
 
-.error-input-current_config{
+.error-input-current_config {
 	margin-left: 10px;
 	color: $MAIN_RED_COLOR;
 }
-.error-input-current_config.hide{
+.error-input-current_config.hide {
 	display: none;
 }
 
 //LOCK STATUS
-.status-input-lock{
+.status-input-lock {
 	margin-left: 10px;
 }
 //SETTINGS INPUT FIELDS
