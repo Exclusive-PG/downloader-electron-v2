@@ -19,3 +19,25 @@
     }
   }
   
+
+@keyframes slide-right {
+  0% {
+    visibility: hidden;
+    -webkit-transform: translateX(-300px);
+            transform: translateX(-300px);
+  }
+  100% {
+    visibility: visible;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+@keyframes CenterIncrease{
+  0%{
+   transform: scaleX(0);
+  }
+  100%{
+    transform: scaleX(1);
+  }
+}

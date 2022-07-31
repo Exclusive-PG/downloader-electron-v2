@@ -29,6 +29,7 @@ $zIndexBtns: 13;
 }
 
 .content_block_settings {
+	overflow: hidden;
 	max-width: 900px;
 	max-height: 900px;
 	min-height: 600px;
@@ -79,6 +80,10 @@ $zIndexBtns: 13;
 	.btn-settings {
 		margin-right: 20px;
 	}
+}
+
+.headline_current_settings.animating {
+	animation: slide-right 0.7s cubic-bezier(0.785, 0.135, 0.150, 0.860)  forwards;
 }
 
 .btn-settings {
@@ -133,12 +138,38 @@ $zIndexBtns: 13;
 .icons_mode_settings {
 	margin-right: 40px;
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	align-items: center;
+	width: 50%;
 
-	span {
-		margin: 10px;
+	i {
+		transition: transform 0.3s ease;
+		&:hover {
+			color: $MAIN_RED_COLOR;
+			transform: translateY(-5px) scale(1.2);
+			cursor: pointer;
+			
+		}
 	}
+	i.active {
+		transform: .3s all;
+		transform: translateY(-5px) scale(1.2);
+		color: $MAIN_RED_COLOR;
+		position: relative;
+		&::after{
+			content: "";
+			position: absolute;
+			left: 0;
+			bottom: -15px;		
+			height: 4px;
+			width: 100%;
+			background-color: $MAIN_RED_COLOR;
+			border-radius: 20px;
+			animation: CenterIncrease .3s ease-out forwards;
+		}
+	}
+	
+
 }
 //error icon
 

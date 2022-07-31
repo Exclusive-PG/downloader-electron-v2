@@ -11,3 +11,9 @@ export type repeatMode = {
 	repeatAll?:boolean
 	repeatOff?:boolean
 }
+
+export type ConfigType = {
+	dirSave:string
+	format:string
+	playlist:string
+}

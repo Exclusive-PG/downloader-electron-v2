@@ -1,18 +1,10 @@
+import { ConfigType } from "../scripts/types/types";
 import { videoInfo } from "ytdl-core"
 import { fs, path } from "../scripts/requiredLib"
 
-export type ConfigType = {
-	dirSave:string
-	format:string
-	playlist:string
-}
+
 
 let _defaultConfig : ConfigType = {
-	format : ".mp4",
-	dirSave : "downloads",
-	playlist : "retro"
-}
-let _defaultConfig1 : ConfigType = {
 	format : ".mp4",
 	dirSave : "downloads",
 	playlist : "retro"
