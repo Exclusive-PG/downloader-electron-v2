@@ -104,14 +104,16 @@ cancelBtn.addEventListener("click", toggleSettingsPanel);
 openSettingsBtn.addEventListener("click", toggleSettingsPanel);
 
 confirmConfigBtn.addEventListener("click", () => {
-	let tempConfig: any = {};
+	let tempConfig: any = {
+		downloadsConfig: {},
+	};
 	let validateInputsArray = validateAllInput(collectionInputsConfig);
 	showAlertIcon(validateInputsArray, document.querySelectorAll(".error-input-current_config"));
 
 	if (validateInputsArray.includes(false)) return;
 
 	collectionInputsConfig.forEach((item: HTMLInputElement) => {
-		tempConfig[item.getAttribute("data-input-config")] = item.value;
+		tempConfig.downloadsConfig[item.getAttribute("data-input-config")] = item.value;
 	});
 
 	configSetup.setConfig(tempConfig);

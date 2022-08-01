@@ -64,9 +64,7 @@ $zIndexBtns: 13;
 	}
 }
 
-.change_current_config {
-	padding: 30px;
-}
+
 
 /*  BUTTONS  */
 
@@ -83,7 +81,7 @@ $zIndexBtns: 13;
 }
 
 .headline_current_settings.animating {
-	animation: slide-right 0.7s cubic-bezier(0.785, 0.135, 0.150, 0.860)  forwards;
+	animation: slide-right 0.7s cubic-bezier(0.785, 0.135, 0.15, 0.86) forwards;
 }
 
 .btn-settings {
@@ -148,31 +146,40 @@ $zIndexBtns: 13;
 			color: $MAIN_RED_COLOR;
 			transform: translateY(-5px) scale(1.2);
 			cursor: pointer;
-			
 		}
 	}
 	i.active {
-		transform: .3s all;
+		transform: 0.3s all;
 		transform: translateY(-5px) scale(1.2);
 		color: $MAIN_RED_COLOR;
 		position: relative;
-		&::after{
+		&::after {
 			content: "";
 			position: absolute;
 			left: 0;
-			bottom: -15px;		
+			bottom: -15px;
 			height: 4px;
 			width: 100%;
 			background-color: $MAIN_RED_COLOR;
 			border-radius: 20px;
-			animation: CenterIncrease .3s ease-out forwards;
+			animation: CenterIncrease 0.3s ease-out forwards;
 		}
 	}
-	
-
 }
-//error icon
 
+.panels_settings {
+	div.active-panel {
+		display: block ;
+	}
+
+	.panel-settings{
+		padding: 30px;
+		display: none;
+	}
+}
+
+
+//error icon
 .error-input-current_config {
 	margin-left: 10px;
 	color: $MAIN_RED_COLOR;

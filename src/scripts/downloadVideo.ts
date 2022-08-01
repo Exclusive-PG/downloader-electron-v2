@@ -34,7 +34,7 @@ export const initDownloaderVideo = async (VideoId: string) => {
 		configSetup.createPlaylist();
 
 		let generatedPath = configSetup.generatedPath(data);
-		let video = ytdl(videoDetails.video_url, { filter: "audioandvideo" });
+		let video = ytdl(videoDetails.video_url, { filter: "audioandvideo"});
 
 		console.log(generatedPath);
 

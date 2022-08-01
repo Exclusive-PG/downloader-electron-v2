@@ -12,8 +12,17 @@ export type repeatMode = {
 	repeatOff?:boolean
 }
 
-export type ConfigType = {
+export type downloadsConfig = {
 	dirSave:string
 	format:string
 	playlist:string
+}
+export type videoConfig = {
+	//preset:string
+	quality:"highest" | "lowest" | "highestaudio" | "lowestaudio" | "highestvideo" | "lowestvideo"|"" 
+	filter: "audioandvideo" | "videoandaudio " | "videoonly" | "audioonly"| ""
+}
+export type ConfigType = {
+	downloadsConfig:downloadsConfig
+	videoConfig:videoConfig
 }
