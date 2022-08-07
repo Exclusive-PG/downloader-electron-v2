@@ -3,7 +3,7 @@ const dropDowns = document.querySelectorAll(".dropdown");
 dropDowns.forEach((dropDown) => {
  //get inner elements from each dropdown
  const select = dropDown.querySelector(".select");
- const arrow = dropDown.querySelector(".arrow");
+ const arrow = dropDown.querySelector(".arrow-dropdown");
  const menu = dropDown.querySelector(".menu");
  const menuItems = dropDown.querySelectorAll(".menu > li");
  const selectTitle = dropDown.querySelector<HTMLSpanElement>(".select-title");
@@ -27,7 +27,7 @@ dropDowns.forEach((dropDown) => {
    //add the clicked select style to the select element
    select.classList.remove("select-clicked");
    // rotate arrow down
-   arrow.classList.remove("arrow-rotate");
+   arrow.classList.remove("arrow-rotate-dropdown");
    //close the menu element
    menu.classList.remove("menu-open");
    //remove active class from all menuitems elements

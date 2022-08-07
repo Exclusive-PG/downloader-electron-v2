@@ -261,7 +261,7 @@ $zIndexBtns: 13;
    .select:hover {
 	background: #323741;
    }
-   .arrow {
+   .arrow-dropdown {
 	width: 10px;
 	height: 10px;
 	margin-right: 5px;
@@ -270,7 +270,7 @@ $zIndexBtns: 13;
 	border-top: 6px solid white;
 	transition: 0.3s;
    }
-   .arrow-rotate {
+   .arrow-rotate-dropdown {
 	transform: rotate(180deg);
    }
    
