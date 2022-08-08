@@ -13,14 +13,33 @@ let _defaultConfig: ConfigType = {
 		dirSave: "downloads",
 		playlist: "retro",
 	},
-	videoConfig:{
-		quality:"",
-		filter:"audioandvideo"
-	}
+	videoConfig: {
+		quality: "",
+		filter: "audioandvideo",
+	},
 };
 
 export default class Config {
 	private config: ConfigType;
+	private videoPresets = {
+		qualityAttr:"data-quality-video",
+		filterAttr:"data-filter-video",
+		quality: [
+			{ key: "Auto (Recommended)", value: "", selectFirst: true },
+			{ key: "Highest", value: "highest" },
+			{ key: "Lowest", value: "lowest" },
+			{ key: "Highest audio", value: "highestaudio" },
+			{ key: "Lowest video", value: "lowestvideo" },
+			{ key: "Highest video", value: "highestvideo" },
+			{ key: "Lowest video", value: "lowestvideo" },
+		],
+		filter: [
+			{ key: "Auto", value: "" },
+			{ key: "Audio and video (Recommended)", value: "audioandvideo", selectFirst: true },
+			{ key: "Video only", value: "videoonly" },
+			{ key: "Audio only", value: "audioonly" },
+		],
+	};
 
 	constructor(config?: ConfigType) {
 		if (config === undefined) {
@@ -32,7 +51,17 @@ export default class Config {
 
 	public get configDownloadFiles() {
 		return {
-			config: this.config.downloadsConfig
+			config: this.config.downloadsConfig,
+		};
+	}
+	// public get configVideoSettings(){
+	// 	return{
+	// 		videoSettings:
+	// 	}
+	// }
+	public get videoPresetsSettings() {
+		return {
+			presets: this.videoPresets,
 		};
 	}
 	public setConfig(config: ConfigType) {
