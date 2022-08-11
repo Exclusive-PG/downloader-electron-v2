@@ -7,6 +7,7 @@ const ConfigPanel = document.querySelector<HTMLDivElement>(".content_block_setti
 const cancelBtn = document.querySelector<HTMLDivElement>(".cancel-config-btn");
 const openSettingsBtn = document.querySelector<HTMLDivElement>(".settings_wrapper");
 const confirmConfigBtn = document.querySelector<HTMLDivElement>(".confirm-config-btn");
+const cancelVideoSettingsBtn = document.querySelector<HTMLDivElement>(".cancel-video-settings-config-btn");
 const manipulateDOM = new ManipulateDOM();
 
 const keys = Object.keys(configSetup.configDownloadFiles.config);
@@ -102,6 +103,7 @@ addEventForChangeInputs();
 
 cancelBtn.addEventListener("click", toggleSettingsPanel);
 openSettingsBtn.addEventListener("click", toggleSettingsPanel);
+cancelVideoSettingsBtn.addEventListener("click",toggleSettingsPanel)
 
 confirmConfigBtn.addEventListener("click", () => {
 	let tempConfig: any = {

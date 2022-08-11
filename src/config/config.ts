@@ -1,4 +1,4 @@
-import { ConfigType } from "../scripts/types/types";
+import { ConfigType, videoConfig } from "../scripts/types/types";
 import { videoInfo } from "ytdl-core";
 import { fs, path } from "../scripts/requiredLib";
 
@@ -22,8 +22,8 @@ let _defaultConfig: ConfigType = {
 export default class Config {
 	private config: ConfigType;
 	private videoPresets = {
-		qualityAttr:"data-quality-video",
-		filterAttr:"data-filter-video",
+		qualityAttr: "data-quality-video",
+		filterAttr: "data-filter-video",
 		quality: [
 			{ key: "Auto (Recommended)", value: "", selectFirst: true },
 			{ key: "Highest", value: "highest" },
@@ -54,11 +54,16 @@ export default class Config {
 			config: this.config.downloadsConfig,
 		};
 	}
-	// public get configVideoSettings(){
-	// 	return{
-	// 		videoSettings:
-	// 	}
-	// }
+	public get configVideoSettings() {
+		return {
+			config: this.config.videoConfig,
+		};
+	}
+	public get allConfig() {
+		return {
+			config: this.config,
+		};
+	}
 	public get videoPresetsSettings() {
 		return {
 			presets: this.videoPresets,
@@ -66,6 +71,9 @@ export default class Config {
 	}
 	public setConfig(config: ConfigType) {
 		this.config = config;
+	}
+	public setVideoConfig(config: videoConfig) {
+		this.config.videoConfig = config;
 	}
 	public createDirectory(path: string = this.config.downloadsConfig.dirSave) {
 		if (!fs.existsSync(path)) {

@@ -22,9 +22,11 @@ const errorMsgSearchInput = new AnimationContoller(document.querySelector(".erro
 const manipulateDOM = new ManipulateDOM();
 
 const { config } = configSetup.configDownloadFiles;
+
 console.log(configSetup.configDownloadFiles.config);
 
 export const initDownloaderVideo = async (VideoId: string) => {
+	const {quality, filter	}  = configSetup.configVideoSettings.config
 	await ytdl.getInfo(`${YOUTUBE_VALIDATE_LINK}${VideoId}`).then((data: videoInfo) => {
 		console.log(data);
 
@@ -34,7 +36,9 @@ export const initDownloaderVideo = async (VideoId: string) => {
 		configSetup.createPlaylist();
 
 		let generatedPath = configSetup.generatedPath(data);
-		let video = ytdl(videoDetails.video_url, { filter: "audioandvideo"});
+
+
+		let video = ytdl(videoDetails.video_url, { filter: filter , quality:quality });
 
 		console.log(generatedPath);
 

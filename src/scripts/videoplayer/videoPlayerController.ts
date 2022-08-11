@@ -99,6 +99,8 @@ export const disabledVideoPlayer = () => {
 };
 export const enabledVideoPlayer = () => {
 	startVideoPlayerAnimations();
+	videoElement.currentTime = 0;
+	videoElement.load();
 	videoPlayer.play();
 };
 
