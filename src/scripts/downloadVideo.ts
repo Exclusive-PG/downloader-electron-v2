@@ -138,7 +138,7 @@ SEARCH_BUTTON.addEventListener("click", () => {
 INPUT_FIELD_FOR_VIDEO_ID.addEventListener("input", () => {
 	if (INPUT_FIELD_FOR_VIDEO_ID.value.includes(YOUTUBE_VALIDATE_LINK)) {
 		let res = INPUT_FIELD_FOR_VIDEO_ID.value.split(SEPARATE_SYMBOLS);
-		INPUT_FIELD_FOR_VIDEO_ID.value = res[1];
+		INPUT_FIELD_FOR_VIDEO_ID.value = res[1].includes("&") ? res[1].split("&")[0] : res[1];
 	}
 });
 
