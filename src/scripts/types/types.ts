@@ -1,28 +1,35 @@
 export type validateYotubeLinkType = {
-	state:boolean,
-	msg: string
-}
+	state: boolean;
+	msg: string;
+};
 
 export type toggleElement = {
-    state:boolean
-}
+	state: boolean;
+};
 export type repeatMode = {
-	repeatOne?:boolean
-	repeatAll?:boolean
-	repeatOff?:boolean
-}
+	repeatOne?: boolean;
+	repeatAll?: boolean;
+	repeatOff?: boolean;
+};
 
 export type downloadsConfig = {
-	dirSave:string
-	format:string
-	playlist:string
-}
+	dirSave: string;
+	format: string;
+	playlist: string;
+};
 export type videoConfig = {
 	//preset:string
-	quality:"highest" | "lowest" | "highestaudio" | "lowestaudio" | "highestvideo" | "lowestvideo"|"" 
-	filter: "audioandvideo" | "videoandaudio " | "videoonly" | "audioonly"| ""
-}
+	quality: "highest" | "lowest" | "highestaudio" | "lowestaudio" | "highestvideo" | "lowestvideo" | "";
+	filter: "audioandvideo" | "videoandaudio " | "videoonly" | "audioonly" | "";
+};
 export type ConfigType = {
-	downloadsConfig:downloadsConfig
-	videoConfig:videoConfig
-}
+	downloadsConfig: downloadsConfig;
+	videoConfig: videoConfig;
+};
+
+export type DataCollectionType = {
+	downloadedAllTimeSize: number;
+	currentDirectorySize: number;
+	currentFilesInDirectory: number;
+	lastUpdate:Date | string;
+};

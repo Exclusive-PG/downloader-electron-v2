@@ -5,7 +5,7 @@ import { path, ytdl, fs } from "./requiredLib";
 import { validateYotubeLinkType } from "./types/types";
 import { ManipulateDOM } from "./manipulateDOM";
 import { disabledVideoPlayer, enabledVideoPlayer, setPoster, videoPlayer } from "./videoplayer/videoPlayerController";
-import { configSetup } from './../config/currentConfig';
+import { configSetup } from "./../config/currentConfig";
 
 const OUPUT_DATA_PERCENT_DOWNLOAD = document.querySelector<HTMLDivElement>(".download-data");
 const INPUT_FIELD_FOR_VIDEO_ID = document.querySelector<HTMLInputElement>(".searchId");
@@ -26,7 +26,7 @@ const { config } = configSetup.configDownloadFiles;
 console.log(configSetup.configDownloadFiles.config);
 
 export const initDownloaderVideo = async (VideoId: string) => {
-	const {quality, filter	}  = configSetup.configVideoSettings.config
+	const { quality, filter } = configSetup.configVideoSettings.config;
 	await ytdl.getInfo(`${YOUTUBE_VALIDATE_LINK}${VideoId}`).then((data: videoInfo) => {
 		console.log(data);
 
@@ -36,17 +36,17 @@ export const initDownloaderVideo = async (VideoId: string) => {
 		configSetup.createPlaylist();
 
 		let generatedPath = configSetup.generatedPath(data);
-
-
-		let video = ytdl(videoDetails.video_url, { filter: filter , quality:quality });
-
+		let video = ytdl(videoDetails.video_url, { filter: filter, quality: quality });
 		console.log(generatedPath);
 
 		animationDownloadingContoller.StartAnimation("run");
 		//DOWNLOAD VIDEO
+		
 		video.pipe(fs.createWriteStream(generatedPath));
 
-		video.once("response", () => {});
+		video.once("response", () => {
+		
+		});
 
 		//LISTENING ALL CHUNKS VIDEO
 		video.on("progress", (chunkInBytes: number, totalBytesDownloaded: number, totalBytes: number) => {
@@ -56,6 +56,14 @@ export const initDownloaderVideo = async (VideoId: string) => {
 			animationDownloadingContoller.outputStatusInPercents(OUPUT_DATA_PERCENT_DOWNLOAD, resultInPercents);
 		});
 
+		video.on("error",(e:Error)=>{
+			console.log("Error video ",(e as Error).message)
+			animationDownloadingContoller.EndAnimation("done");
+			setTimeout(() => {
+				animationDownloadingContoller.ExitAnimation(["run", "done"]);
+				animationDownloadingContoller.refreshHeightProgress(PROGRESS_CURRENT_ELEMENT);
+			}, 1500);
+		})
 		//LISTENING END DOWNLOAD VIDEO
 		video.on("end", () => {
 			console.log("файл скачан");
@@ -75,7 +83,7 @@ export const initDownloaderVideo = async (VideoId: string) => {
 
 			console.log(path.resolve(generatedPath));
 		});
-	});
+	})
 };
 
 const validateYotubeLink = (fullUrl: string, id: string): validateYotubeLinkType => {
@@ -118,7 +126,9 @@ SEARCH_BUTTON.addEventListener("click", () => {
 				setTimeout(() => {
 					disabledVideoPlayer();
 					downloadScreen.StartAnimation("show_progress");
+				
 					initDownloaderVideo(INPUT_FIELD_FOR_VIDEO_ID.value);
+
 				}, 1000);
 			});
 		}, 1000);
