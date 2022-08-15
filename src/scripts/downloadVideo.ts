@@ -6,6 +6,7 @@ import { validateYotubeLinkType } from "./types/types";
 import { ManipulateDOM } from "./manipulateDOM";
 import { disabledVideoPlayer, enabledVideoPlayer, setPoster, videoPlayer } from "./videoplayer/videoPlayerController";
 import { configSetup } from "./../config/currentConfig";
+import DataCollection from './data-collection/DataCollection';
 
 const OUPUT_DATA_PERCENT_DOWNLOAD = document.querySelector<HTMLDivElement>(".download-data");
 const INPUT_FIELD_FOR_VIDEO_ID = document.querySelector<HTMLInputElement>(".searchId");
@@ -20,16 +21,17 @@ const downloadScreen = new AnimationContoller(document.querySelector(".download_
 const incorrectUrlOrId = new AnimationContoller(document.querySelector(".search__input"));
 const errorMsgSearchInput = new AnimationContoller(document.querySelector(".error_msg_search_input"));
 const manipulateDOM = new ManipulateDOM();
-
+const dc = new DataCollection();
 const { config } = configSetup.configDownloadFiles;
 
 console.log(configSetup.configDownloadFiles.config);
 
 export const initDownloaderVideo = async (VideoId: string) => {
 	const { quality, filter } = configSetup.configVideoSettings.config;
-	await ytdl.getInfo(`${YOUTUBE_VALIDATE_LINK}${VideoId}`).then((data: videoInfo) => {
-		console.log(data);
 
+ await ytdl.getInfo(`${YOUTUBE_VALIDATE_LINK}${VideoId}`).then((data: videoInfo) => {
+		console.log(data);
+	
 		const { videoDetails } = data;
 
 		configSetup.createDirectory();
@@ -54,7 +56,9 @@ export const initDownloaderVideo = async (VideoId: string) => {
 			let resultInPercents: number = (totalBytesDownloaded / totalBytes) * 100;
 			animationDownloadingContoller.startHeightProgressBar(PROGRESS_CURRENT_ELEMENT, resultInPercents);
 			animationDownloadingContoller.outputStatusInPercents(OUPUT_DATA_PERCENT_DOWNLOAD, resultInPercents);
-		});
+
+
+		})
 
 		video.on("error",(e:Error)=>{
 			console.log("Error video ",(e as Error).message)
@@ -67,6 +71,12 @@ export const initDownloaderVideo = async (VideoId: string) => {
 		//LISTENING END DOWNLOAD VIDEO
 		video.on("end", () => {
 			console.log("файл скачан");
+			//let _dataCollection : any = {}
+			//_dataCollection.totalSize = fs.statSync(generatedPath).size;
+			
+			dc.createJSONData(dc.prepareData(generatedPath,configSetup.configDownloadFiles.config.dirSave))
+		
+
 			animationDownloadingContoller.EndAnimation("done");
 			setTimeout(() => {
 				animationDownloadingContoller.ExitAnimation(["run", "done"]);
@@ -82,8 +92,12 @@ export const initDownloaderVideo = async (VideoId: string) => {
 			}, 2500);
 
 			console.log(path.resolve(generatedPath));
+			
 		});
+		
 	})
+
+	
 };
 
 const validateYotubeLink = (fullUrl: string, id: string): validateYotubeLinkType => {
@@ -112,7 +126,7 @@ const validateYotubeLink = (fullUrl: string, id: string): validateYotubeLinkType
 //event : () => search video by click
 //SEARCH_BUTTON.addEventListener("click", () => initDownloaderVideo(INPUT_FIELD_FOR_VIDEO_ID.value));
 
-SEARCH_BUTTON.addEventListener("click", () => {
+SEARCH_BUTTON.addEventListener("click",  () => {
 	let isValid = validateYotubeLink(`${YOUTUBE_VALIDATE_LINK}${INPUT_FIELD_FOR_VIDEO_ID.value}`, INPUT_FIELD_FOR_VIDEO_ID.value);
 	manipulateDOM.toggleElement(SEARCH_BUTTON, { state: false });
 
@@ -123,11 +137,11 @@ SEARCH_BUTTON.addEventListener("click", () => {
 				setPoster(data.videoDetails.thumbnails);
 				document.querySelector(".name-video").textContent = data.videoDetails.title;
 				manipulateDOM.toggleElement(SEARCH_BUTTON, { state: true });
-				setTimeout(() => {
+				setTimeout(async () => {
 					disabledVideoPlayer();
 					downloadScreen.StartAnimation("show_progress");
-				
-					initDownloaderVideo(INPUT_FIELD_FOR_VIDEO_ID.value);
+					console.log("DATA")
+					initDownloaderVideo(INPUT_FIELD_FOR_VIDEO_ID.value)
 
 				}, 1000);
 			});

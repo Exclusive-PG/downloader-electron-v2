@@ -8,8 +8,10 @@ export default class DataCollection {
         downloadedAllTimeSize:0,
         currentDirectorySize:0,
         currentFilesInDirectory:0,
-        lastUpdate : Date.now().toString()
+        lastUpdateUnix : Date.now().toString()
     }
+
+	private PathToDataCollection : string  = path.join("dc","data", "data.json");
 
 	public getAllFiles(dirPath: string, arrayOfFiles: string[]) {
 		let files = fs.readdirSync(dirPath);
@@ -35,19 +37,23 @@ export default class DataCollection {
 			totalSize += fs.statSync(filePath).size;
 		});
 
-		switch (currentSize) {
-			case "KB":
-				return totalSize / 1024;
-			case "MB":
-				return totalSize / (1024 * 1024);
-			case "GB":
-				return totalSize / (1024 * 1024 * 1024);
-			default:
-				return totalSize;
-		}
+		return this.convertSizes(totalSize, currentSize);
 	};
 
-	public createJSONData(pathFile: string, data: any) {
+	public convertSizes(amount : number , currentSize : string){
+		switch (currentSize) {
+			case "KB":
+				return amount / 1024;
+			case "MB":
+				return amount / (1024 * 1024);
+			case "GB":
+				return amount / (1024 * 1024 * 1024);
+			default:
+				return amount;
+		}
+	}
+	
+	public createJSONData( data: any , pathFile: string  = this.PathToDataCollection) {
 		fs.mkdirSync(path.dirname(pathFile), { recursive: true }, (err: Error) => {
 			if (err) throw err;
 		});
@@ -58,16 +64,30 @@ export default class DataCollection {
 			console.log((e as Error).message);
 		}
 	}
+	public prepareData (pathDownloadedFile:string,pathToSetup:string) {
+		let _data : DataCollectionType = {
+		downloadedAllTimeSize : this.convertSizes(fs.statSync(pathDownloadedFile).size,"MB"),
+		currentDirectorySize : this.getTotalSize(pathToSetup, "MB"),
+		currentFilesInDirectory : this.getAllFiles(pathToSetup, []).length,
+		lastUpdateUnix : Date.now().toString()
+		}
+
+		return _data;
+
+	}
 
     public get GetData (){
         return{
             data:this._data
         }
     }
+	public get pathToDC (){
+		return this.PathToDataCollection
+	}
 }
 
 const dataCollection = new DataCollection();
 
 console.log(dataCollection.getTotalSize(configSetup.configDownloadFiles.config.dirSave, "MB"));
 
-dataCollection.createJSONData(path.join("dataCollection","data", "data.json"), dataCollection.GetData.data);
+//dataCollection.createJSONData(path.join("dataCollection","data", "data.json"), dataCollection.GetData.data);

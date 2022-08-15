@@ -31,5 +31,5 @@ export type DataCollectionType = {
 	downloadedAllTimeSize: number;
 	currentDirectorySize: number;
 	currentFilesInDirectory: number;
-	lastUpdate:Date | string;
+	lastUpdateUnix:Date | string;
 };
