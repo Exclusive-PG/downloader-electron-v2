@@ -6,7 +6,7 @@ import { validateYotubeLinkType } from "./types/types";
 import { ManipulateDOM } from "./manipulateDOM";
 import { disabledVideoPlayer, enabledVideoPlayer, setPoster, videoPlayer } from "./videoplayer/videoPlayerController";
 import { configSetup } from "./../config/currentConfig";
-import DataCollection from './data-collection/DataCollection';
+import DataCollection, { dc } from './data-collection/DataCollection';
 
 const OUPUT_DATA_PERCENT_DOWNLOAD = document.querySelector<HTMLDivElement>(".download-data");
 const INPUT_FIELD_FOR_VIDEO_ID = document.querySelector<HTMLInputElement>(".searchId");
@@ -21,7 +21,7 @@ const downloadScreen = new AnimationContoller(document.querySelector(".download_
 const incorrectUrlOrId = new AnimationContoller(document.querySelector(".search__input"));
 const errorMsgSearchInput = new AnimationContoller(document.querySelector(".error_msg_search_input"));
 const manipulateDOM = new ManipulateDOM();
-const dc = new DataCollection();
+
 const { config } = configSetup.configDownloadFiles;
 
 console.log(configSetup.configDownloadFiles.config);
@@ -70,13 +70,8 @@ export const initDownloaderVideo = async (VideoId: string) => {
 		})
 		//LISTENING END DOWNLOAD VIDEO
 		video.on("end", () => {
-			console.log("файл скачан");
-			//let _dataCollection : any = {}
-			//_dataCollection.totalSize = fs.statSync(generatedPath).size;
-			
+			console.log("file downloaded");
 			dc.createJSONData(dc.prepareData(generatedPath,configSetup.configDownloadFiles.config.dirSave))
-		
-
 			animationDownloadingContoller.EndAnimation("done");
 			setTimeout(() => {
 				animationDownloadingContoller.ExitAnimation(["run", "done"]);
@@ -124,7 +119,6 @@ const validateYotubeLink = (fullUrl: string, id: string): validateYotubeLinkType
 };
 
 //event : () => search video by click
-//SEARCH_BUTTON.addEventListener("click", () => initDownloaderVideo(INPUT_FIELD_FOR_VIDEO_ID.value));
 
 SEARCH_BUTTON.addEventListener("click",  () => {
 	let isValid = validateYotubeLink(`${YOUTUBE_VALIDATE_LINK}${INPUT_FIELD_FOR_VIDEO_ID.value}`, INPUT_FIELD_FOR_VIDEO_ID.value);
@@ -159,6 +153,7 @@ SEARCH_BUTTON.addEventListener("click",  () => {
 });
 
 //event : () => change input link if appropriate
+
 INPUT_FIELD_FOR_VIDEO_ID.addEventListener("input", () => {
 	if (INPUT_FIELD_FOR_VIDEO_ID.value.includes(YOUTUBE_VALIDATE_LINK)) {
 		let res = INPUT_FIELD_FOR_VIDEO_ID.value.split(SEPARATE_SYMBOLS);

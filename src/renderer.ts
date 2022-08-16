@@ -5,3 +5,4 @@ import "./scripts/settings/settings-panel-switcher";
 import "./scripts/settings/config-settings-controller";
 import "./scripts/settings/video-settings-controller";
 import "./scripts/data-collection/DataCollection";
+import "./scripts/data-collection/data-page";

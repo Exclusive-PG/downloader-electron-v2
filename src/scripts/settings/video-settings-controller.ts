@@ -91,16 +91,4 @@ dropDowns.forEach((dropDown) => {
 });
 
 confirmAllSettingsBtn.addEventListener("click", confirmVideoSettings);
-const circle = document.querySelector<SVGCircleElement>(".circle-render")
 
-function circlePercent(percent:number) {
-    let stroke = 565.49 - (565.49 * percent) / 100;
-    circle.style.strokeDashoffset = stroke.toString();
-	document.querySelector(".card__number").textContent = `${percent} %`
-};
-for (let index = 0; index <= 100; index++) {
-	setTimeout(() => {
-		circlePercent(index)
-	}, 1500);
-	
-}

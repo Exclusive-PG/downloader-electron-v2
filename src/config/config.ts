@@ -90,7 +90,14 @@ export default class Config {
 
 	public generatedPath(videoData: videoInfo): string {
 		const { dirSave, playlist, format } = this.config.downloadsConfig;
-		return path.join(dirSave, playlist, `${videoData.videoDetails.title}${format}`);
+
+		let title = [...videoData.videoDetails.title].map((symbol) => {
+				
+			return !this.validateFileName(symbol) ? "" : symbol;
+			})
+			.join("");
+
+		return path.join(dirSave, playlist, `${title}${format}`);
 	}
 
 	public validateFileName(fileName: string): boolean {
