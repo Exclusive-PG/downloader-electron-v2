@@ -7,6 +7,7 @@ import { ManipulateDOM } from "./manipulateDOM";
 import { disabledVideoPlayer, enabledVideoPlayer, setPoster, videoPlayer } from "./videoplayer/videoPlayerController";
 import { configSetup } from "./../config/currentConfig";
 import DataCollection, { dc } from './data-collection/DataCollection';
+import { renderCircleCards } from './data-collection/data-page';
 
 const OUPUT_DATA_PERCENT_DOWNLOAD = document.querySelector<HTMLDivElement>(".download-data");
 const INPUT_FIELD_FOR_VIDEO_ID = document.querySelector<HTMLInputElement>(".searchId");
@@ -22,7 +23,6 @@ const incorrectUrlOrId = new AnimationContoller(document.querySelector(".search_
 const errorMsgSearchInput = new AnimationContoller(document.querySelector(".error_msg_search_input"));
 const manipulateDOM = new ManipulateDOM();
 
-const { config } = configSetup.configDownloadFiles;
 
 console.log(configSetup.configDownloadFiles.config);
 
@@ -71,7 +71,13 @@ export const initDownloaderVideo = async (VideoId: string) => {
 		//LISTENING END DOWNLOAD VIDEO
 		video.on("end", () => {
 			console.log("file downloaded");
+			
 			dc.createJSONData(dc.prepareData(generatedPath,configSetup.configDownloadFiles.config.dirSave))
+			dc.createJSONData(dc.addHistoryData(
+				{category:videoDetails.category,title:videoDetails.title,video_url:videoDetails.video_url,downloadTime: new Date().toLocaleString(),localPath:generatedPath,
+				size:dc.convertSizes(fs.statSync(generatedPath).size, "MB"),thumbnails:videoDetails.thumbnails[videoDetails.thumbnails.length-1].url}),dc.pathToHistory);
+			
+			
 			animationDownloadingContoller.EndAnimation("done");
 			setTimeout(() => {
 				animationDownloadingContoller.ExitAnimation(["run", "done"]);
@@ -84,12 +90,15 @@ export const initDownloaderVideo = async (VideoId: string) => {
 			setTimeout(() => {
 				videoPlayer.setSourceStream(path.resolve(generatedPath));
 				enabledVideoPlayer();
+				renderCircleCards(document.querySelector(".data_card_container"));
 			}, 2500);
 
 			console.log(path.resolve(generatedPath));
 			
 		});
 		
+	}).catch((e:Error)=>{
+		console.log(e)
 	})
 
 	
@@ -160,12 +169,3 @@ INPUT_FIELD_FOR_VIDEO_ID.addEventListener("input", () => {
 		INPUT_FIELD_FOR_VIDEO_ID.value = res[1].includes("&") ? res[1].split("&")[0] : res[1];
 	}
 });
-
-// .then(()=>{
-//     fs.readdir((dirSave:any,err:Error, files:any) => {
-//         files.forEach((file:any) => {
-//           console.log(file);
-//         });
-//       });
-// })
-//    const absolutePath = path.resolve( folder, file );

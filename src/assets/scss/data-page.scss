@@ -12,18 +12,25 @@
 
 
 .data-container{
-    min-height: 100vh;
+  height: 90vh;
+  overflow-y: auto;
+
 }
+.data-container::-webkit-scrollbar{
+  display: none;
+}
+
 .data_card_container {
-    max-height: 80vh;
+    
     display: grid;
     grid-gap: 30px;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     align-items: center;
     background-color: #e1e1e1;
-    padding: 2rem;
+    padding:100px  50px;
     font-family: "Poppins", sans-serif !important;
 }
+
 
 //////////////////////
 
@@ -50,15 +57,33 @@
   color: #231c3d;
 }
 .circular_card{
-    height: 400px;
-    width: 400px;
+    height: 430px;
+    width: 430px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 20px 20px 40px rgba(60, 60, 150, 0.25);
     display: grid;
     place-items: center;
+    transition: .3s all;
+    &:hover{
+      transform: translateY(-10px);
+      box-shadow: 40px 20px 20px rgba(60, 60, 150, 0.25);
+      cursor: pointer;
+    }
 }
 .title_circle_card{
     font-weight: 300;
     font-size: 20px;
+}
+
+.render_area_history{
+  padding-top: 10px;
+
+  .history_item{
+    margin: 50px 0;
+  }
+  .history_item_thumbnails img{
+    max-width: 250px;
+    max-height: 200px;
+  }
 }

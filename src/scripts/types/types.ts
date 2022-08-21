@@ -27,9 +27,26 @@ export type ConfigType = {
 	videoConfig: videoConfig;
 };
 
+export type dataCollectionItem = {
+	current:number;
+	max:number;
+}
 export type DataCollectionType = {
-	downloadedAllTimeSize: number;
-	currentDirectorySize: number;
-	currentFilesInDirectory: number;
+	downloadedAllTimeSize: dataCollectionItem;
+	currentDirectorySize: dataCollectionItem;
+	currentFilesInDirectory: dataCollectionItem;
 	lastUpdateUnix:Date | string;
 };
+
+export type HistoryItemType = {
+	category : string;
+	title:string;
+	video_url:string;
+	thumbnails:string;
+	localPath : string;
+	downloadTime : Date | string;
+	size:number|string;
+}
+// export type HistoryDownloadedFilesType = {
+//   history:Array<HistoryDownloadedFilesItemType>
+// }
