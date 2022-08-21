@@ -2,6 +2,7 @@ import { DataCollectionType, HistoryItemType } from "../types/types";
 import { dc } from "./DataCollection";
 
 export const renderCircleCards = (outerPlace: HTMLElement) => {
+	try{
 	const arrayCards = [
 		{
 			title: "Current directory size",
@@ -22,6 +23,7 @@ export const renderCircleCards = (outerPlace: HTMLElement) => {
 			color: "#0fc70f",
 		},
 	];
+	console.log(arrayCards)
 	outerPlace.innerHTML = "";
 	arrayCards.forEach((data: any) => {
 		outerPlace.innerHTML += `
@@ -32,6 +34,9 @@ export const renderCircleCards = (outerPlace: HTMLElement) => {
         <div class="title_circle_card">${data.title}</div>
     </div>`;
 	});
+}catch(e){
+	console.log(e)
+}
 };
 
 function circleProgressBar(progressPercent: number, color?: string) {
