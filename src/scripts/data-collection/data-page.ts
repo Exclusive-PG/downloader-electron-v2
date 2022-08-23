@@ -1,29 +1,34 @@
 import { path } from "../requiredLib";
-import { DataCollectionType, HistoryItemType } from "../types/types";
+import { HistoryItemType } from "../types/types";
 import { dc } from "./DataCollection";
 
- const renderCircleCards = (outerPlace: HTMLElement) => {
+const renderCircleCards = (outerPlace: HTMLElement) => {
+	if (Object.keys(dc.GetData.data).length === 0) return;
+
+	const { currentDirectorySize, currentFilesInDirectory, downloadedAllTimeSize } = dc.GetData.data;
+
 	try {
 		const arrayCards = [
 			{
 				title: "Current directory size",
-				percent: (dc.GetData.data.currentDirectorySize.current / dc.GetData.data.currentDirectorySize.max) * 100,
-				value: dc.GetData.data.currentDirectorySize,
+				percent: (currentDirectorySize.current / currentDirectorySize.max) * 100,
+				value: currentDirectorySize,
 				color: "#f44336",
 			},
 			{
 				title: "Current files in directory",
-				percent: (dc.GetData.data.currentFilesInDirectory.current / dc.GetData.data.currentFilesInDirectory.max) * 100,
-				value: dc.GetData.data.currentFilesInDirectory,
+				percent: (currentFilesInDirectory.current / currentFilesInDirectory.max) * 100,
+				value: currentFilesInDirectory,
 				color: "#ffa117",
 			},
 			{
 				title: "Downloaded all time size",
-				percent: (dc.GetData.data.downloadedAllTimeSize.current / dc.GetData.data.downloadedAllTimeSize.max) * 100,
-				value: dc.GetData.data.downloadedAllTimeSize,
+				percent: (downloadedAllTimeSize.current / downloadedAllTimeSize.max) * 100,
+				value: downloadedAllTimeSize,
 				color: "#0fc70f",
 			},
 		];
+	
 		console.log(arrayCards);
 		outerPlace.innerHTML = "";
 		arrayCards.forEach((data: any) => {
@@ -45,28 +50,51 @@ function circleProgressBar(progressPercent: number, color?: string) {
 	return `conic-gradient( ${color === undefined ? "#4d5bf9" : color} ${_value}deg, #cadcff ${_value}deg ) `;
 }
 
-function circleProgressBar2(collectionCards: NodeListOf<HTMLElement>, data: Array<any>) {
+function circleProgressBar2(collectionCards: NodeListOf<HTMLElement>) {
+	if (Object.keys(dc.GetData.data).length === 0) return;
+
+	const { currentDirectorySize, currentFilesInDirectory, downloadedAllTimeSize } = dc.GetData.data;
+
+	const arrayCards = [
+		{
+			title: "Current directory size",
+			percent: (currentDirectorySize.current / currentDirectorySize.max) * 100,
+			value: currentDirectorySize,
+			color: "#f44336",
+		},
+		{
+			title: "Current files in directory",
+			percent: (currentFilesInDirectory.current / currentFilesInDirectory.max) * 100,
+			value: currentFilesInDirectory,
+			color: "#ffa117",
+		},
+		{
+			title: "Downloaded all time size",
+			percent: (downloadedAllTimeSize.current / downloadedAllTimeSize.max) * 100,
+			value: downloadedAllTimeSize,
+			color: "#0fc70f",
+		},
+	];
+
 	let start = 0;
 
 	for (let index = 0; index < collectionCards.length; index++) {
 		let progress = setInterval(() => {
-			if (start >= data[index].percent) return;
+			if (start >= arrayCards[index].percent) return;
 
 			start++;
-			collectionCards[index].style.background = `conic-gradient(
-      #4d5bf9 ${start * 3.6}deg,
-      #cadcff ${start * 3.6}deg
-  )`;
+			collectionCards[index].style.background = `conic-gradient( ${arrayCards[index].color === undefined ? "#4d5bf9" : arrayCards[index].color} ${start * 3.6}deg, #cadcff ${
+				start * 3.6
+			}deg ) `;
 		}, 50);
 	}
 }
 
-// setTimeout(() => {
-// 	//circleProgressBar2(document.querySelectorAll(".circular-progress"), arrayCards);
-// }, 1000);
+const renderHistory = (outerPlace: HTMLElement,history = dc.GetData.history) => {
+	//let history = dc.GetData.history;
 
-const renderHistory = (outerPlace: HTMLElement) => {
-	let history = dc.getHistory;
+	if (history.length === 0) return;
+
 
 	outerPlace.innerHTML = "";
 	history.forEach((item: HistoryItemType) => {
@@ -109,12 +137,49 @@ const renderHistory = (outerPlace: HTMLElement) => {
 		});
 	});
 };
-  
-renderCircleCards(document.querySelector(".data_card_container"));
-renderHistory(document.querySelector(".render_area_history"));
 
 
-export const refreshDataPage = () =>{
+const pagination = (data:Array<any>,itemPerPage:number) =>{
+	let currentPoint = startPoint;
+	let goalPoint = currentPoint + itemPerPage;
+	console.log(startPoint)
+	console.log(data.length)
+	let outerArray : any = []
+	console.log(`page:${Math.ceil(data.length/itemPerPage)}`)
+
+	for (let index = startPoint; index < goalPoint; index++) {
+		
+		if(currentPoint === goalPoint || currentPoint > data.length || currentPoint < 0) return;
+		
+		outerArray.push(data[index])
+		++currentPoint
+	}
+	currentPoint = 0
+	renderHistory(document.querySelector(".render_area_history"),outerArray);
+}
+
+export const refreshDataPage = () => {
+	// 	setTimeout(() => {
+	// 	circleProgressBar2(document.querySelectorAll(".circular-progress"));
+	// }, 1000);
 	renderCircleCards(document.querySelector(".data_card_container"));
 	renderHistory(document.querySelector(".render_area_history"));
-}
+};
+
+let startPoint = 0;
+document.querySelector(".next-history-page").addEventListener("click",()=>{
+	//let step = 1;
+	++startPoint ;
+	console.log("next")
+	pagination(dc.GetData.history,3)
+})
+document.querySelector(".prev-history-page").addEventListener("click",()=>{
+	//let step = 1;
+	--startPoint;
+	
+	pagination(dc.GetData.history,3)
+	console.log("prev")
+})
+
+renderCircleCards(document.querySelector(".data_card_container"));
+renderHistory(document.querySelector(".render_area_history"));

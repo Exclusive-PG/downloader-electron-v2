@@ -1,8 +1,9 @@
 import { fs, path } from "../requiredLib";
 import { DataCollectionType, HistoryItemType } from "../types/types";
 import { configSetup } from "./../../config/currentConfig";
+import FileManipulation from "./FileManipulation";
 
-export default class DataCollection {
+export default class DataCollection extends FileManipulation {
 	private _data: DataCollectionType = {
 		downloadedAllTimeSize: { current: 0, max: 10000 },
 		currentDirectorySize: { current: 0, max: 10000 },
@@ -10,69 +11,20 @@ export default class DataCollection {
 		lastUpdateUnix: Date.now().toString(),
 	};
 
-	private _historyDownloadedFiles: Array<HistoryItemType> | any[] = []
+	private _historyDownloadedFiles: Array<HistoryItemType> | any[] = [];
 
-	
-	private PathToDataCollection: string = path.join("dc", "data", "data.json");
-	private PathToHistory:string = path.join("dc","data","history.json");
-
-	constructor() {
-		// if (fs.existsSync(this.PathToDataCollection)) {
-		// 	console.log("data log detected");
-		// 	this._data = JSON.parse(fs.readFileSync(this.PathToDataCollection, { encoding: "utf-8" }));
-		// }
-		this._data = this.loadData(this.PathToDataCollection)
-		this._historyDownloadedFiles = this.loadData(this.PathToHistory)
-		console.log(this._data);
-	}
-
-	public getAllFiles(dirPath: string, arrayOfFiles: string[]) {
-		let files = fs.readdirSync(dirPath);
-
-		arrayOfFiles = arrayOfFiles || [];
-
-		files.forEach((file: string) => {
-			if (fs.statSync(path.join(dirPath, file)).isDirectory()) {
-				this.getAllFiles(path.join(dirPath, file), arrayOfFiles);
-			} else {
-				arrayOfFiles.push(path.resolve(path.join(dirPath, file)));
-			}
-		});
-
-		return arrayOfFiles;
-	}
-
-	public getTotalSize = (dirPath: string, currentSize: string) => {
-		const arrayOfFiles = this.getAllFiles(dirPath, []);
-		let totalSize = 0;
-
-		arrayOfFiles.forEach((filePath: string) => {
-			totalSize += fs.statSync(filePath).size;
-		});
-
-		return this.convertSizes(totalSize, currentSize);
+	private _paths = {
+		pathToDataCollection: path.join("dc", "data", "data.json"),
+		pathToHistory: path.join("dc", "data", "history.json"),
 	};
 
-	public convertSizes(amount: number, currentSize: string) {
-		switch (currentSize) {
-			case "KB":
-				return amount / 1024;
-			case "MB":
-				return amount / (1024 * 1024);
-			case "GB":
-				return amount / (1024 * 1024 * 1024);
-			default:
-				return amount;
-		}
-	}
-
-	public createJSONData(data: any, pathFile: string = this.PathToDataCollection) {
-		fs.mkdirSync(path.dirname(pathFile), { recursive: true }, (err: Error) => {
-			if (err) throw err;
-		});
-
+	constructor() {
+		super();
 		try {
-			fs.writeFileSync(path.resolve(pathFile), JSON.stringify(data));
+			this._data = this.loadData(this._paths.pathToDataCollection) || {};
+			this._historyDownloadedFiles = this.loadData(this._paths.pathToHistory) || [];
+			console.log(this._data);
+			console.log(this._historyDownloadedFiles);
 		} catch (e) {
 			console.log((e as Error).message);
 		}
@@ -80,8 +32,8 @@ export default class DataCollection {
 
 	public prepareData(pathDownloadedFile: string, pathToSetup: string) {
 		console.log("preparing data");
+		const { pathToDataCollection } = this._paths;
 
-		
 		let _data: DataCollectionType = {
 			downloadedAllTimeSize: { current: this.convertSizes(fs.statSync(pathDownloadedFile).size, "MB"), max: 10000 },
 			currentDirectorySize: { current: this.getTotalSize(pathToSetup, "MB"), max: 10000 },
@@ -89,9 +41,9 @@ export default class DataCollection {
 			lastUpdateUnix: Date.now().toString(),
 		};
 
-		if (fs.existsSync(this.PathToDataCollection) && path.extname(this.PathToDataCollection) === ".json") {
+		if (fs.existsSync(pathToDataCollection) && path.extname(pathToDataCollection) === ".json") {
 			console.log("data log detected");
-			let _findedData: DataCollectionType = JSON.parse(fs.readFileSync(this.PathToDataCollection, { encoding: "utf-8" }));
+			let _findedData: DataCollectionType = JSON.parse(fs.readFileSync(pathToDataCollection, { encoding: "utf-8" }));
 			_data.downloadedAllTimeSize.current = _findedData.downloadedAllTimeSize.current + this.convertSizes(fs.statSync(pathDownloadedFile).size, "MB");
 			_data.currentDirectorySize.max = this.checkMaxSize(_data.currentDirectorySize.current, _findedData.currentDirectorySize.max);
 			_data.currentFilesInDirectory.max = this.checkMaxSize(_data.currentFilesInDirectory.current, _findedData.currentFilesInDirectory.max);
@@ -104,45 +56,46 @@ export default class DataCollection {
 	}
 
 	private checkMaxSize(size: number, maxSize: number) {
-		return size >= maxSize ? maxSize*2 : maxSize; 
+		return size >= maxSize ? maxSize * 2 : maxSize;
 	}
-	public refreshData(){	
-		if (fs.existsSync(this.PathToDataCollection) && path.extname(this.PathToDataCollection) === ".json") {
-			this._data = JSON.parse(fs.readFileSync(this.PathToDataCollection, { encoding: "utf-8" }));
+	public refreshData() {
+		const { pathToDataCollection } = this._paths;
+		if (fs.existsSync(pathToDataCollection) && path.extname(pathToDataCollection) === ".json") {
+			this._data = JSON.parse(fs.readFileSync(pathToDataCollection, { encoding: "utf-8" }));
 		}
 	}
 	public addHistoryData(historyItem: HistoryItemType) {
-		this._historyDownloadedFiles = this.loadData(this.PathToHistory);
+		//	this._historyDownloadedFiles = this.loadData(this._paths.pathToHistory);
 		this._historyDownloadedFiles.push(historyItem);
 		return this._historyDownloadedFiles;
 	}
-	public loadData(pathToFile:string,ext:string= ".json"){	
-		let _loadData = [];
+	public loadData(pathToFile: string, ext: string = ".json") {
+		let _loadData;
 		if (fs.existsSync(pathToFile) && path.extname(pathToFile) === ext) {
-			_loadData = JSON.parse(fs.readFileSync(this.PathToHistory, { encoding: "utf-8" }));
+			_loadData = JSON.parse(fs.readFileSync(this._paths.pathToHistory, { encoding: "utf-8" }));
 		}
+
 		return _loadData;
 	}
 	public get GetData() {
 		this.refreshData();
 		return {
 			data: this._data,
+			history: this._historyDownloadedFiles,
 		};
 	}
 
-	public get pathToDC() {
-		return this.PathToDataCollection;
-	}
-	public get pathToHistory() {
-		return this.PathToHistory;
-	}
-	public get getHistory(){
-		return this._historyDownloadedFiles;
+	public get Paths() {
+		return {
+			data: this._paths.pathToDataCollection,
+			history: this._paths.pathToHistory,
+		};
 	}
 }
 
 export const dc = new DataCollection();
 
-//const dataCollection = new DataCollection();
-
-//console.log(dataCollection.getTotalSize(configSetup.configDownloadFiles.config.dirSave, "MB"));
+// if (fs.existsSync(this.PathToDataCollection)) {
+// 	console.log("data log detected");
+// 	this._data = JSON.parse(fs.readFileSync(this.PathToDataCollection, { encoding: "utf-8" }));
+// }

@@ -72,10 +72,10 @@ export const initDownloaderVideo = async (VideoId: string) => {
 		video.on("end", () => {
 			console.log("file downloaded");
 			
-			dc.createJSONData(dc.prepareData(generatedPath,configSetup.configDownloadFiles.config.dirSave))
+			dc.createJSONData(dc.prepareData(generatedPath,configSetup.configDownloadFiles.config.dirSave),dc.Paths.data)
 			dc.createJSONData(dc.addHistoryData(
 				{category:videoDetails.category,title:videoDetails.title,video_url:videoDetails.video_url,downloadTime: new Date().toLocaleString(),localPath:generatedPath,
-				size:dc.convertSizes(fs.statSync(generatedPath).size, "MB"),thumbnails:videoDetails.thumbnails[videoDetails.thumbnails.length-1].url}),dc.pathToHistory);
+				size:dc.convertSizes(fs.statSync(generatedPath).size, "MB"),thumbnails:videoDetails.thumbnails[videoDetails.thumbnails.length-1].url}),dc.Paths.history);
 			
 			
 			animationDownloadingContoller.EndAnimation("done");

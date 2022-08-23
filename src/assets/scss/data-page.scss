@@ -29,10 +29,10 @@
 }
 
 //////////////////////
-.hd_analytics_card{
-  background-color: #e1e1e1;
-  padding-top: 65px;
-  text-transform: uppercase;
+.hd_analytics_card {
+	background-color: #e1e1e1;
+	padding-top: 65px;
+	text-transform: uppercase;
 }
 .circular-progress {
 	position: relative;
@@ -76,17 +76,17 @@
 	font-size: 20px;
 }
 
-.history_download_video{
-  background: #222327;
+/////////HISTORY
+///
+.history_download_video {
+	background: #222327;
 }
 
-
-.hd_history{
-  text-transform: uppercase;
-  padding: 25px 0;
-  color: #fff;
+.hd_history {
+	text-transform: uppercase;
+	padding: 25px 0;
+	color: #fff;
 }
-
 
 .render_area_history {
 	padding: 10px 15px;
@@ -94,20 +94,16 @@
 	.history_item {
 		margin: 50px auto;
 		display: flex;
-    background-color: #e1e1e1;
-    padding: 25px 50px;
-    border-radius: 20px;
-    width: 1200px;
-    transition: .3s all;
-    &:hover{
-      transform: translateX(-40px);
-    }
-    
+		background-color: #e1e1e1;
+		padding: 25px 50px;
+		border-radius: 20px;
+		width: 1200px;
+		transition: 0.3s all;
+		&:hover {
+			transform: translateX(-40px);
+		}
 	}
 
-
-
-  
 	.history_item_thumbnails img {
 		max-width: 300px;
 		max-height: 200px;
@@ -131,7 +127,12 @@
 	}
 	.history_item_title {
 		grid-area: title;
-    font-size: 22;
+		font-size: 22;
+		width: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		padding: 5px;
+		text-overflow: ellipsis;
 	}
 	.history_item_size {
 		grid-area: size;
@@ -146,15 +147,38 @@
 	.history_item_downloadTime {
 		grid-area: time;
 	}
-  .history_item_play{
-    grid-area: play;
-    align-self: center;
-      .play-btn{
-      transition: .1s all;
-        &:hover{
-          cursor: pointer;
-          color: $MAIN_RED_COLOR;
-        }
-      }
-  }
+	.history_item_play {
+		grid-area: play;
+		align-self: center;
+		.play-btn {
+			transition: 0.1s all;
+			&:hover {
+				cursor: pointer;
+				color: $MAIN_RED_COLOR;
+			}
+		}
+	}
+}
+
+////////CHECK (NEED MODE DATA)
+
+.need_mode_data_analytics_card {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.need_mode_data_history {
+	font-size: 20px;
+	font-weight: bold;
+	color: #e1e1e1;
+}
+
+.btns-control-history{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+    div{
+      margin: 10px 50px 80px 50px;
+    }
 }
