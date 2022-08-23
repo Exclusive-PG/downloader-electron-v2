@@ -1,89 +1,160 @@
 :root {
-    --primary-light: #39ddfa;
-    --primary: #00abdf;
-    --primary-dark: #008ada;
-    
-    --white: #FFFFFF;
-    --greyLight-1: #ebf5fc;
-    --greyLight-2: #d5e0f3;
-    --greyLight-3: #c1d9f0;
-    --greyDark: #646b8c;
-  }
+	--primary-light: #39ddfa;
+	--primary: #00abdf;
+	--primary-dark: #008ada;
 
-
-.data-container{
-  height: 90vh;
-  overflow-y: auto;
-
+	--white: #ffffff;
+	--greyLight-1: #ebf5fc;
+	--greyLight-2: #d5e0f3;
+	--greyLight-3: #c1d9f0;
+	--greyDark: #646b8c;
 }
-.data-container::-webkit-scrollbar{
-  display: none;
+
+.data-container {
+	height: 90vh;
+	overflow-y: auto;
+}
+.data-container::-webkit-scrollbar {
+	display: none;
 }
 
 .data_card_container {
-    
-    display: grid;
-    grid-gap: 30px;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    align-items: center;
-    background-color: #e1e1e1;
-    padding:100px  50px;
-    font-family: "Poppins", sans-serif !important;
+	display: grid;
+	grid-gap: 30px;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	align-items: center;
+	background-color: #e1e1e1;
+	padding: 100px 50px;
+	font-family: "Poppins", sans-serif !important;
 }
-
 
 //////////////////////
-
- .circular-progress {
-  position: relative;
-  height: 250px;
-  width: 250px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
+.hd_analytics_card{
+  background-color: #e1e1e1;
+  padding-top: 65px;
+  text-transform: uppercase;
+}
+.circular-progress {
+	position: relative;
+	height: 250px;
+	width: 250px;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
 }
 .circular-progress:before {
-  content: "";
-  position: absolute;
-  height: 84%;
-  width: 84%;
-  background-color: #ffffff;
-  border-radius: 50%;
+	content: "";
+	position: absolute;
+	height: 84%;
+	width: 84%;
+	background-color: #ffffff;
+	border-radius: 50%;
 }
 .value-container {
-  position: relative;
-  font-weight: 900;
-  font-size: 30px;
-  color: #231c3d;
+	position: relative;
+	font-weight: 900;
+	font-size: 30px;
+	color: #231c3d;
 }
-.circular_card{
-    height: 430px;
-    width: 430px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 20px 20px 40px rgba(60, 60, 150, 0.25);
-    display: grid;
-    place-items: center;
+.circular_card {
+	height: 430px;
+	width: 430px;
+	background-color: #ffffff;
+	border-radius: 8px;
+	box-shadow: 20px 20px 40px rgba(60, 60, 150, 0.25);
+	display: grid;
+	place-items: center;
+	transition: 0.3s all;
+	&:hover {
+		transform: translateY(-10px);
+		box-shadow: 40px 20px 20px rgba(60, 60, 150, 0.25);
+		cursor: pointer;
+	}
+}
+.title_circle_card {
+	font-weight: 300;
+	font-size: 20px;
+}
+
+.history_download_video{
+  background: #222327;
+}
+
+
+.hd_history{
+  text-transform: uppercase;
+  padding: 25px 0;
+  color: #fff;
+}
+
+
+.render_area_history {
+	padding: 10px 15px;
+
+	.history_item {
+		margin: 50px auto;
+		display: flex;
+    background-color: #e1e1e1;
+    padding: 25px 50px;
+    border-radius: 20px;
+    width: 1200px;
     transition: .3s all;
     &:hover{
-      transform: translateY(-10px);
-      box-shadow: 40px 20px 20px rgba(60, 60, 150, 0.25);
-      cursor: pointer;
+      transform: translateX(-40px);
     }
-}
-.title_circle_card{
-    font-weight: 300;
-    font-size: 20px;
-}
+    
+	}
 
-.render_area_history{
-  padding-top: 10px;
 
-  .history_item{
-    margin: 50px 0;
-  }
-  .history_item_thumbnails img{
-    max-width: 250px;
-    max-height: 200px;
+
+  
+	.history_item_thumbnails img {
+		max-width: 300px;
+		max-height: 200px;
+	}
+	.history_link_title {
+		text-decoration: none;
+		color: #000;
+		padding: 5px;
+		font-weight: bold;
+	}
+	.history_txt_data {
+		font-size: 20px;
+		padding-left: 20px;
+		grid-gap: 40px;
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		grid-template-areas:
+			"title  title title title play"
+			"localPath  time time size play";
+	}
+	.history_item_title {
+		grid-area: title;
+    font-size: 22;
+	}
+	.history_item_size {
+		grid-area: size;
+	}
+	.history_item_localPath {
+		grid-area: localPath;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	.history_item_downloadTime {
+		grid-area: time;
+	}
+  .history_item_play{
+    grid-area: play;
+    align-self: center;
+      .play-btn{
+      transition: .1s all;
+        &:hover{
+          cursor: pointer;
+          color: $MAIN_RED_COLOR;
+        }
+      }
   }
 }

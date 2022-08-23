@@ -7,7 +7,7 @@ import { ManipulateDOM } from "./manipulateDOM";
 import { disabledVideoPlayer, enabledVideoPlayer, setPoster, videoPlayer } from "./videoplayer/videoPlayerController";
 import { configSetup } from "./../config/currentConfig";
 import DataCollection, { dc } from './data-collection/DataCollection';
-import { renderCircleCards } from './data-collection/data-page';
+import { refreshDataPage } from './data-collection/data-page';
 
 const OUPUT_DATA_PERCENT_DOWNLOAD = document.querySelector<HTMLDivElement>(".download-data");
 const INPUT_FIELD_FOR_VIDEO_ID = document.querySelector<HTMLInputElement>(".searchId");
@@ -90,7 +90,7 @@ export const initDownloaderVideo = async (VideoId: string) => {
 			setTimeout(() => {
 				videoPlayer.setSourceStream(path.resolve(generatedPath));
 				enabledVideoPlayer();
-				renderCircleCards(document.querySelector(".data_card_container"));
+				refreshDataPage();
 			}, 2500);
 
 			console.log(path.resolve(generatedPath));

@@ -45,7 +45,7 @@ export type HistoryItemType = {
 	thumbnails:string;
 	localPath : string;
 	downloadTime : Date | string;
-	size:number|string;
+	size:number;
 }
 // export type HistoryDownloadedFilesType = {
 //   history:Array<HistoryDownloadedFilesItemType>
