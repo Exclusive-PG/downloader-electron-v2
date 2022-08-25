@@ -28,7 +28,7 @@ const renderCircleCards = (outerPlace: HTMLElement) => {
 				color: "#0fc70f",
 			},
 		];
-	
+
 		console.log(arrayCards);
 		outerPlace.innerHTML = "";
 		arrayCards.forEach((data: any) => {
@@ -90,15 +90,15 @@ function circleProgressBar2(collectionCards: NodeListOf<HTMLElement>) {
 	}
 }
 
-const renderHistory = (outerPlace: HTMLElement,history = dc.GetData.history) => {
+const renderHistory = (outerPlace: HTMLElement, history = dc.GetData.history) => {
 	//let history = dc.GetData.history;
 
 	if (history.length === 0) return;
 
-
 	outerPlace.innerHTML = "";
-	history.forEach((item: HistoryItemType) => {
-		outerPlace.innerHTML += `
+	try {
+		history.forEach((item: HistoryItemType) => {
+			outerPlace.innerHTML += `
 		<div class="history_item">
 			<div class="history_item_thumbnails"><img src="${item.thumbnails}"/></div>
 			<div class="history_txt_data">
@@ -110,8 +110,10 @@ const renderHistory = (outerPlace: HTMLElement,history = dc.GetData.history) => 
 			</div>		
 		</div>
 		`;
-	});
-
+		});
+	} catch (e) {
+		console.info("Pagination:Not full page");
+	}
 	const links = document.querySelectorAll(".history_link_title");
 	const localPaths = document.querySelectorAll(".history_item_localPath");
 	const playBtns = document.querySelectorAll(".history_item_play");
@@ -132,31 +134,36 @@ const renderHistory = (outerPlace: HTMLElement,history = dc.GetData.history) => 
 
 	playBtns.forEach((item: HTMLDivElement) => {
 		item.addEventListener("click", () => {
+			console.log(item.getAttribute("data-path"));
 			let currentPath = path.resolve(item.getAttribute("data-path"));
 			require("electron").shell.openPath(currentPath);
 		});
 	});
 };
 
+const pagination = (data: Array<any>, itemPerPage: number, outCurrentPageText?: HTMLElement) => {
+	let currentPoint = startIndex,
+		goalPoint = currentPoint + itemPerPage,
+		outerArray: any = [];
 
-const pagination = (data:Array<any>,itemPerPage:number) =>{
-	let currentPoint = startPoint;
-	let goalPoint = currentPoint + itemPerPage;
-	console.log(startPoint)
-	console.log(data.length)
-	let outerArray : any = []
-	console.log(`page:${Math.ceil(data.length/itemPerPage)}`)
+	outCurrentPageText.textContent = `${currentPage}/${Math.ceil(data.length / itemPerPage)}`;
 
-	for (let index = startPoint; index < goalPoint; index++) {
-		
-		if(currentPoint === goalPoint || currentPoint > data.length || currentPoint < 0) return;
-		
-		outerArray.push(data[index])
-		++currentPoint
+	for (let index = currentPoint; index < goalPoint; index++) {
+		if (currentPoint === goalPoint) return;
+
+		outerArray.push(data[index]);
+		++currentPoint;
 	}
-	currentPoint = 0
-	renderHistory(document.querySelector(".render_area_history"),outerArray);
-}
+
+	currentPoint = 0;
+
+	//try {
+	renderHistory(document.querySelector(".render_area_history"), outerArray);
+	//} catch (e) {
+	//console.log(e);
+	//return;
+	//}
+};
 
 export const refreshDataPage = () => {
 	// 	setTimeout(() => {
@@ -164,22 +171,34 @@ export const refreshDataPage = () => {
 	// }, 1000);
 	renderCircleCards(document.querySelector(".data_card_container"));
 	renderHistory(document.querySelector(".render_area_history"));
+	pagination(dc.GetData.history, step, outerPlaceForPagination);
 };
 
-let startPoint = 0;
-document.querySelector(".next-history-page").addEventListener("click",()=>{
-	//let step = 1;
-	++startPoint ;
-	console.log("next")
-	pagination(dc.GetData.history,3)
-})
-document.querySelector(".prev-history-page").addEventListener("click",()=>{
-	//let step = 1;
-	--startPoint;
-	
-	pagination(dc.GetData.history,3)
-	console.log("prev")
-})
+let startIndex = 0,
+	currentPage = 1,
+	step = 5;
+
+const outerPlaceForPagination = document.querySelector<HTMLElement>(".current_and_total_pages_history");
+
+document.querySelector(".next-history-page").addEventListener("click", () => {
+	if (startIndex + step >= dc.GetData.history.length) return;
+
+	startIndex += step;
+	++currentPage;
+	console.log("next");
+	console.log(startIndex);
+	pagination(dc.GetData.history, step, outerPlaceForPagination);
+});
+
+document.querySelector(".prev-history-page").addEventListener("click", () => {
+	if (startIndex <= 0) return;
+	startIndex -= step;
+	--currentPage;
+	console.log("prev");
+	console.log(startIndex);
+	pagination(dc.GetData.history, step, outerPlaceForPagination);
+});
 
 renderCircleCards(document.querySelector(".data_card_container"));
 renderHistory(document.querySelector(".render_area_history"));
+pagination(dc.GetData.history, step, outerPlaceForPagination);

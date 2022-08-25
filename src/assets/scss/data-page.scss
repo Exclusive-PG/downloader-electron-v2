@@ -87,21 +87,22 @@
 	padding: 25px 0;
 	color: #fff;
 }
+$historyItem: #d0d3d4;
 
 .render_area_history {
 	padding: 10px 15px;
 
 	.history_item {
+		transform: translateZ(160px) rotateY(180deg);
 		margin: 50px auto;
 		display: flex;
-		background-color: #e1e1e1;
+		background-color: $historyItem;
 		padding: 25px 50px;
 		border-radius: 20px;
+		position: relative;
 		width: 1200px;
+		animation: show_history_item 0.8s forwards linear;
 		transition: 0.3s all;
-		&:hover {
-			transform: translateX(-40px);
-		}
 	}
 
 	.history_item_thumbnails img {
@@ -170,15 +171,61 @@
 .need_mode_data_history {
 	font-size: 20px;
 	font-weight: bold;
-	color: #e1e1e1;
+	color: $historyItem;
 }
 
-.btns-control-history{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-    div{
-      margin: 10px 50px 80px 50px;
-    }
+.btns-control-history {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	div {
+		margin: 10px 50px 80px 50px;
+	}
+}
+.current_and_total_pages_history {
+	font-size: 35px;
+}
+
+@for $i from 0 through 10 {
+	.history_item:nth-child(#{$i}) {
+		animation-delay: #{$i * 0.25}s;
+		&:hover {
+			&::before {
+				width: 100%;
+			}
+		}
+	}
+}
+.history_item::before {
+	content: "";
+	z-index: -1;
+	border-radius: 20px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 0%;
+	height: 100%;
+	background: #fdfefe;
+	transition: 0.4s all;
+}
+
+.prev-history-page,
+.next-history-page {
+	transition: 0.3s all;
+	&:hover {
+		cursor: pointer;
+		color: $MAIN_RED_COLOR;
+	}
+}
+
+.prev-history-page {
+	&:hover {
+		animation: hover_arrow_left 1s infinite ease-in-out;
+	}
+}
+.next-history-page {
+	&:hover {
+		animation: hover_arrow_right 1s infinite ease-in-out;
+	}
 }
