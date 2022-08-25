@@ -141,7 +141,7 @@ const renderHistory = (outerPlace: HTMLElement, history = dc.GetData.history) =>
 	});
 };
 
-const pagination = (data: Array<any>, itemPerPage: number, outCurrentPageText?: HTMLElement) => {
+const paginationHistory = (data: Array<any>, itemPerPage: number, outCurrentPageText?: HTMLElement) => {
 	let currentPoint = startIndex,
 		goalPoint = currentPoint + itemPerPage,
 		outerArray: any = [];
@@ -169,9 +169,9 @@ export const refreshDataPage = () => {
 	// 	setTimeout(() => {
 	// 	circleProgressBar2(document.querySelectorAll(".circular-progress"));
 	// }, 1000);
+		//renderHistory(document.querySelector(".render_area_history"));
 	renderCircleCards(document.querySelector(".data_card_container"));
-	renderHistory(document.querySelector(".render_area_history"));
-	pagination(dc.GetData.history, step, outerPlaceForPagination);
+	paginationHistory(dc.GetData.history, step, outerPlaceForPagination);
 };
 
 let startIndex = 0,
@@ -187,7 +187,7 @@ document.querySelector(".next-history-page").addEventListener("click", () => {
 	++currentPage;
 	console.log("next");
 	console.log(startIndex);
-	pagination(dc.GetData.history, step, outerPlaceForPagination);
+	paginationHistory(dc.GetData.history, step, outerPlaceForPagination);
 });
 
 document.querySelector(".prev-history-page").addEventListener("click", () => {
@@ -196,9 +196,9 @@ document.querySelector(".prev-history-page").addEventListener("click", () => {
 	--currentPage;
 	console.log("prev");
 	console.log(startIndex);
-	pagination(dc.GetData.history, step, outerPlaceForPagination);
+	paginationHistory(dc.GetData.history, step, outerPlaceForPagination);
 });
 
 renderCircleCards(document.querySelector(".data_card_container"));
-renderHistory(document.querySelector(".render_area_history"));
-pagination(dc.GetData.history, step, outerPlaceForPagination);
+//renderHistory(document.querySelector(".render_area_history"));
+paginationHistory(dc.GetData.history, step, outerPlaceForPagination);
