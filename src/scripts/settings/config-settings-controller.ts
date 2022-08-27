@@ -95,6 +95,8 @@ const confirmSetConfig = () => {
 				confirmConfigBtn.innerHTML = "<p>Apply</p>";
 			}
 		}
+		console.log("ALL")
+		console.log(configSetup.allConfig)
 	});
 };
 fillInput();
@@ -107,7 +109,6 @@ cancelVideoSettingsBtn.addEventListener("click",toggleSettingsPanel)
 
 confirmConfigBtn.addEventListener("click", () => {
 	let tempConfig: any = {
-		downloadsConfig: {},
 	};
 	let validateInputsArray = validateAllInput(collectionInputsConfig);
 	showAlertIcon(validateInputsArray, document.querySelectorAll(".error-input-current_config"));
@@ -115,10 +116,10 @@ confirmConfigBtn.addEventListener("click", () => {
 	if (validateInputsArray.includes(false)) return;
 
 	collectionInputsConfig.forEach((item: HTMLInputElement) => {
-		tempConfig.downloadsConfig[item.getAttribute("data-input-config")] = item.value;
+		tempConfig[item.getAttribute("data-input-config")] = item.value;
 	});
 
-	configSetup.setConfig(tempConfig);
+	configSetup.setdownloadsConfig(tempConfig);
 	confirmSetConfig();
 	console.log("main config");
 	console.log(configSetup.configDownloadFiles.config);

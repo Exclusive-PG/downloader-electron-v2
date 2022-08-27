@@ -2,7 +2,7 @@ import { fs, path } from "../requiredLib";
 
 
 export default class FileManipulation {
-    public getAllFiles(dirPath: string, arrayOfFiles: string[]) {
+    public getAllFiles(dirPath: string, arrayOfFiles?: string[]) {
 		let files = fs.readdirSync(dirPath);
 
 		arrayOfFiles = arrayOfFiles || [];

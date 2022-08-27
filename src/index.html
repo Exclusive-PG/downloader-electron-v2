@@ -5,6 +5,8 @@
 		<meta charset="UTF-8" />
 		<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" /> -->
 	</head>
 
@@ -161,6 +163,9 @@
 						<div class="settings_wrapper">
 							<i class="fa-solid fa-gear fa-2x"></i>
 						</div>
+						<div class="playlist_wrapper playlist_controller_btn">
+							<i class="fa-solid fa-list fa-2x"></i>
+						</div>
 					</div>
 					<div class="settings_panel hide">
 						<div class="content_block_settings">
@@ -231,6 +236,13 @@
 						</div>
 					</div>
 				</div>
+			</section>
+			<section class="playlistZone active">
+					<div class="playlist_zone_content_wrapper">
+						<center><h2 class="hd_playlist_zone">Playlists</h2></center>
+						<div class="playlists_render"></div>
+					</div>
+
 			</section>
 		</main>
 		<canvas id="canvas" style="z-index: -20; position: fixed; left: 0; top: 0"></canvas>

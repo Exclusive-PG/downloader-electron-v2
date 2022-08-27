@@ -1,4 +1,4 @@
-import { ConfigType, videoConfig } from "../scripts/types/types";
+import { ConfigType, downloadsConfig, videoConfig } from "../scripts/types/types";
 import { videoInfo } from "ytdl-core";
 import { fs, path } from "../scripts/requiredLib";
 
@@ -7,20 +7,23 @@ import { fs, path } from "../scripts/requiredLib";
 // 	dirSave : "downloads",
 // 	playlist : "retro"
 // }
-let _defaultConfig: ConfigType = {
-	downloadsConfig: {
-		format: ".mp4",
-		dirSave: "downloads",
-		playlist: "retro",
-	},
-	videoConfig: {
-		quality: "",
-		filter: "audioandvideo",
-	},
-};
+
 
 export default class Config {
 	private config: ConfigType;
+
+	private _defaultConfig: ConfigType = {
+		downloadsConfig: {
+			format: ".mp4",
+			dirSave: "downloads",
+			playlist: "retro",
+		},
+		videoConfig: {
+			quality: "",
+			filter: "audioandvideo",
+		},
+	};
+
 	private videoPresets = {
 		qualityAttr: "data-quality-video",
 		filterAttr: "data-filter-video",
@@ -43,7 +46,7 @@ export default class Config {
 
 	constructor(config?: ConfigType) {
 		if (config === undefined) {
-			this.config = _defaultConfig;
+			this.config = this._defaultConfig;
 		} else {
 			this.config = config;
 		}
@@ -69,8 +72,11 @@ export default class Config {
 			presets: this.videoPresets,
 		};
 	}
-	public setConfig(config: ConfigType) {
+	public setAllConfig(config: ConfigType) {
 		this.config = config;
+	}
+	public setdownloadsConfig(config: downloadsConfig) {
+		this.config.downloadsConfig = config;
 	}
 	public setVideoConfig(config: videoConfig) {
 		this.config.videoConfig = config;
