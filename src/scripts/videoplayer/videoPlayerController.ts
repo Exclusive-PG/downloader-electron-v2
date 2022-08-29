@@ -10,6 +10,7 @@ import {
 	volumeIconAnimations,
 } from "./videoPlayerControllerAnimation";
 import { ManipulateDOM } from "./../manipulateDOM";
+import { PlaylistItem } from "../types/types";
 
 const videoElement = document.querySelector<HTMLVideoElement>("[data-video]");
 const poster = document.querySelector<HTMLImageElement>("[data-poster-video]");
@@ -122,6 +123,11 @@ export const togglePictureInPictureMode = () => {
 	}
 };
 
+export const setListSrcVideosForVideoPlayer = (list:Array<PlaylistItem>) => {
+	videoPlayer.setCurrentPlayingIndexInList = 0;
+	videoPlayer.setListSrcVideos(list)
+	repeatModeSwitcher(1)
+}
 // VOLUME
 let isScrubbingVolume = false;
 function handeVolumeUpdate(e: MouseEvent) {
@@ -179,19 +185,21 @@ function activeRotateMode() {
 }
 
 //Repeat mode switcher
-let currentState = 1;
-const repeatModeSwitcher = () => {
+
+const repeatModeSwitcher = (currentStateRM? : number ) => {
 	let isStatus = repeatControls.hasAttribute("data-state-repeat-mode");
 
 	const { repatAll, repeatOff, repeatOne } = videoPlayer.VariablesForRepeatMode;
 	const STATE = [repeatOff, repeatOne, repatAll];
+	
+	if(currentStateRM !== undefined) videoPlayer.currentStateRepeatMode = currentStateRM
 
-	currentState === STATE.length - 1 ? (currentState = 0) : ++currentState;
+	videoPlayer.currentStateRepeatMode === STATE.length - 1 ? (videoPlayer.currentStateRepeatMode = 0) : ++videoPlayer.currentStateRepeatMode;
 
-	isStatus && repeatControls.setAttribute("data-state-repeat-mode", STATE[currentState]);
-	console.log(STATE[currentState]);
+	isStatus && repeatControls.setAttribute("data-state-repeat-mode", STATE[videoPlayer.currentStateRepeatMode]);
+	console.log(STATE[videoPlayer.currentStateRepeatMode]);
 
-	switch (STATE[currentState]) {
+	switch (STATE[videoPlayer.currentStateRepeatMode]) {
 		case repeatOne:
 			repeatModeOneAnimation();
 			break;
@@ -250,7 +258,10 @@ videoElement.addEventListener("ended", () => {
 	}
 });
 
-repeatControls.addEventListener("click", repeatModeSwitcher);
+repeatControls.addEventListener("click", ()=>{
+
+	repeatModeSwitcher()
+});
 videoElement.addEventListener("click", PlayControls);
 
 timeLineContainer.addEventListener("mousemove", handeTimeLineUpdate);

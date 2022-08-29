@@ -9,6 +9,28 @@
 	z-index: 12;
 	transition: 0.3s all;
 	overflow: hidden;
+	overflow-y: scroll;
+}
+
+.playlistZone::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+.playlistZone::-webkit-scrollbar-track {
+	//background: #f1f1f1;
+	border-radius: 20px;
+}
+
+/* Handle */
+.playlistZone::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 20px;
+}
+
+/* Handle on hover */
+.playlistZone::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }
 
 .playlistZone.active {
@@ -20,7 +42,7 @@
 	color: #fff;
 }
 .playlists_render {
-	padding: 100px 15px;
+	padding: 200px 15px;
 	height: 100%;
 	display: grid;
 	justify-content: center;
@@ -34,18 +56,83 @@
 		font-family: "Poppins", sans-serif;
 		font-weight: bolder;
 		font-size: 25px;
-		background: #17202A;
+		//background: #17202A;
 		// border-radius: 30px;
 		color: #fff;
-		transition: 0.3s all ease-in-out;
+		transition: 0.3s ease-in-out;
 		&:hover {
 			cursor: pointer;
 			color: $MAIN_RED_COLOR;
 			transform: translateY(-20px);
+
+			.count_content {
+				//transform: translateY(-100px);
+				animation: bounce-in-bottom 0.8s both;
+			}
 		}
 	}
 }
 
 .icon_playlist {
 	//background:green;
+}
+.swiper {
+	width: 100%;
+	height: 100%;
+}
+
+.wrapper_playlist_item {
+	position: relative;
+	.count_content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: -1;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background-color: #fff;
+		color: $MAIN_RED_COLOR;
+		transition: 0.3s all;
+		position: absolute;
+		left: -15px;
+		top: 50px;
+	}
+}
+
+.content_item {
+	color: #fff;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	justify-content: center;
+	align-items: center;
+	padding: 20px 15px;
+	&:hover {
+		cursor: pointer;
+		color: $MAIN_RED_COLOR;
+		background-color: #fff;
+	}
+}
+.content_item.playing-track {
+	color: $MAIN_RED_COLOR;
+	background-color: #fff;
+}
+.content_current_playlist_render {
+	//padding: 0 15px;
+	// display:grid;
+	// grid-template-columns: repeat(2,1fr);
+	// justify-content: center;
+	// align-items: center;
+	.play_current_content {
+		display: grid;
+		justify-content: center;
+	}
+	.ext_content_item {
+		display: grid;
+		justify-content: center;
+	}
+}
+
+.wrapper_content_item {
+	margin-bottom: 40px;
 }

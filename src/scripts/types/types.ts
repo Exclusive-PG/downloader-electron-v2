@@ -28,25 +28,32 @@ export type ConfigType = {
 };
 
 export type dataCollectionItem = {
-	current:number;
-	max:number;
-}
+	current: number;
+	max: number;
+};
 export type DataCollectionType = {
 	downloadedAllTimeSize: dataCollectionItem;
 	currentDirectorySize: dataCollectionItem;
 	currentFilesInDirectory: dataCollectionItem;
-	lastUpdateUnix:Date | string;
+	lastUpdateUnix: Date | string;
 };
 
 export type HistoryItemType = {
-	category : string;
-	title:string;
-	video_url:string;
-	thumbnails:string;
-	localPath : string;
-	downloadTime : Date | string;
-	size:number;
-}
+	category: string;
+	title: string;
+	video_url: string;
+	thumbnails: string;
+	localPath: string;
+	downloadTime: Date | string;
+	size: number;
+};
+
+export type PlaylistItem = {
+	playlist: string;
+	name: string;
+	extension: string;
+	path: string;
+};
 // export type HistoryDownloadedFilesType = {
 //   history:Array<HistoryDownloadedFilesItemType>
 // }
