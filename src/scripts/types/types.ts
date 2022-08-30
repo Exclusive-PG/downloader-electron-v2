@@ -53,6 +53,7 @@ export type PlaylistItem = {
 	name: string;
 	extension: string;
 	path: string;
+	index?:number
 };
 // export type HistoryDownloadedFilesType = {
 //   history:Array<HistoryDownloadedFilesItemType>

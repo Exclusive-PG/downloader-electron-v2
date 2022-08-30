@@ -128,6 +128,10 @@ export const setListSrcVideosForVideoPlayer = (list:Array<PlaylistItem>) => {
 	videoPlayer.setListSrcVideos(list)
 	repeatModeSwitcher(1)
 }
+export const setCurrentVideoInList = (currentIndex:number)=>{
+	videoPlayer.setCurrentPlayingIndexInList = currentIndex;
+	videoPlayer.playPlaylist();	
+}
 // VOLUME
 let isScrubbingVolume = false;
 function handeVolumeUpdate(e: MouseEvent) {

@@ -1,13 +1,13 @@
 import { videoInfo } from "ytdl-core";
-import Config from "./../config/config";
 import { AnimationContoller, AnimationDownloadingContoller } from "./animations/DownloadAnimationController";
 import { path, ytdl, fs } from "./requiredLib";
 import { validateYotubeLinkType } from "./types/types";
 import { ManipulateDOM } from "./manipulateDOM";
 import { disabledVideoPlayer, enabledVideoPlayer, setPoster, videoPlayer } from "./videoplayer/videoPlayerController";
 import { configSetup } from "./../config/currentConfig";
-import DataCollection, { dc } from './data-collection/DataCollection';
-import { refreshDataPage } from './data-collection/data-page';
+import  { dc } from "./data-collection/DataCollection";
+import { refreshDataPage } from "./data-collection/data-page";
+import { renderPlaylistsZone } from "./playlist/playlist";
 
 const OUPUT_DATA_PERCENT_DOWNLOAD = document.querySelector<HTMLDivElement>(".download-data");
 const INPUT_FIELD_FOR_VIDEO_ID = document.querySelector<HTMLInputElement>(".searchId");
@@ -23,85 +23,88 @@ const incorrectUrlOrId = new AnimationContoller(document.querySelector(".search_
 const errorMsgSearchInput = new AnimationContoller(document.querySelector(".error_msg_search_input"));
 const manipulateDOM = new ManipulateDOM();
 
-
 console.log(configSetup.configDownloadFiles.config);
 
 export const initDownloaderVideo = async (VideoId: string) => {
 	const { quality, filter } = configSetup.configVideoSettings.config;
 
- await ytdl.getInfo(`${YOUTUBE_VALIDATE_LINK}${VideoId}`).then((data: videoInfo) => {
-		console.log(data);
-	
-		const { videoDetails } = data;
+	await ytdl
+		.getInfo(`${YOUTUBE_VALIDATE_LINK}${VideoId}`)
+		.then((data: videoInfo) => {
+			console.log(data);
 
-		configSetup.createDirectory();
-		configSetup.createPlaylist();
+			const { videoDetails } = data;
 
-		let generatedPath = configSetup.generatedPath(data);
-		let video = ytdl(videoDetails.video_url, { filter: filter, quality: quality });
-		console.log(generatedPath);
+			configSetup.createDirectory();
+			configSetup.createPlaylist();
 
-		animationDownloadingContoller.StartAnimation("run");
-		//DOWNLOAD VIDEO
-		
-		video.pipe(fs.createWriteStream(generatedPath));
+			let generatedPath = configSetup.generatedPath(data);
+			let video = ytdl(videoDetails.video_url, { filter: filter, quality: quality });
+			console.log(generatedPath);
 
-		video.once("response", () => {
-		
-		});
+			animationDownloadingContoller.StartAnimation("run");
+			//DOWNLOAD VIDEO
 
-		//LISTENING ALL CHUNKS VIDEO
-		video.on("progress", (chunkInBytes: number, totalBytesDownloaded: number, totalBytes: number) => {
-			console.log(`${Math.round(totalBytesDownloaded / 1024 / 1024)}/${Math.round(totalBytes / 1024 / 1024)}`);
-			let resultInPercents: number = (totalBytesDownloaded / totalBytes) * 100;
-			animationDownloadingContoller.startHeightProgressBar(PROGRESS_CURRENT_ELEMENT, resultInPercents);
-			animationDownloadingContoller.outputStatusInPercents(OUPUT_DATA_PERCENT_DOWNLOAD, resultInPercents);
+			video.pipe(fs.createWriteStream(generatedPath));
 
+			video.once("response", () => {});
 
+			//LISTENING ALL CHUNKS VIDEO
+			video.on("progress", (chunkInBytes: number, totalBytesDownloaded: number, totalBytes: number) => {
+				console.log(`${Math.round(totalBytesDownloaded / 1024 / 1024)}/${Math.round(totalBytes / 1024 / 1024)}`);
+				let resultInPercents: number = (totalBytesDownloaded / totalBytes) * 100;
+				animationDownloadingContoller.startHeightProgressBar(PROGRESS_CURRENT_ELEMENT, resultInPercents);
+				animationDownloadingContoller.outputStatusInPercents(OUPUT_DATA_PERCENT_DOWNLOAD, resultInPercents);
+			});
+
+			video.on("error", (e: Error) => {
+				console.log("Error video ", (e as Error).message);
+				animationDownloadingContoller.EndAnimation("done");
+				setTimeout(() => {
+					animationDownloadingContoller.ExitAnimation(["run", "done"]);
+					animationDownloadingContoller.refreshHeightProgress(PROGRESS_CURRENT_ELEMENT);
+				}, 1500);
+			});
+			//LISTENING END DOWNLOAD VIDEO
+			video.on("end", () => {
+				console.log("file downloaded");
+
+				dc.createJSONData(dc.prepareData(generatedPath, configSetup.configDownloadFiles.config.dirSave), dc.Paths.data);
+				dc.createJSONData(
+					dc.addHistoryData({
+						category: videoDetails.category,
+						title: videoDetails.title,
+						video_url: videoDetails.video_url,
+						downloadTime: new Date().toLocaleString(),
+						localPath: generatedPath,
+						size: dc.convertSizes(fs.statSync(generatedPath).size, "MB"),
+						thumbnails: videoDetails.thumbnails[videoDetails.thumbnails.length - 1].url,
+					}),
+					dc.Paths.history,
+				);
+				renderPlaylistsZone();
+
+				animationDownloadingContoller.EndAnimation("done");
+				setTimeout(() => {
+					animationDownloadingContoller.ExitAnimation(["run", "done"]);
+					animationDownloadingContoller.refreshHeightProgress(PROGRESS_CURRENT_ELEMENT);
+				}, 1500);
+				setTimeout(() => {
+					downloadScreen.ExitAnimation(["show_progress"]);
+				}, 2000);
+
+				setTimeout(() => {
+					videoPlayer.setSourceStream(path.resolve(generatedPath));
+					enabledVideoPlayer();
+					refreshDataPage();
+				}, 2500);
+
+				console.log(path.resolve(generatedPath));
+			});
 		})
-
-		video.on("error",(e:Error)=>{
-			console.log("Error video ",(e as Error).message)
-			animationDownloadingContoller.EndAnimation("done");
-			setTimeout(() => {
-				animationDownloadingContoller.ExitAnimation(["run", "done"]);
-				animationDownloadingContoller.refreshHeightProgress(PROGRESS_CURRENT_ELEMENT);
-			}, 1500);
-		})
-		//LISTENING END DOWNLOAD VIDEO
-		video.on("end", () => {
-			console.log("file downloaded");
-			
-			dc.createJSONData(dc.prepareData(generatedPath,configSetup.configDownloadFiles.config.dirSave),dc.Paths.data)
-			dc.createJSONData(dc.addHistoryData(
-				{category:videoDetails.category,title:videoDetails.title,video_url:videoDetails.video_url,downloadTime: new Date().toLocaleString(),localPath:generatedPath,
-				size:dc.convertSizes(fs.statSync(generatedPath).size, "MB"),thumbnails:videoDetails.thumbnails[videoDetails.thumbnails.length-1].url}),dc.Paths.history);
-			
-			
-			animationDownloadingContoller.EndAnimation("done");
-			setTimeout(() => {
-				animationDownloadingContoller.ExitAnimation(["run", "done"]);
-				animationDownloadingContoller.refreshHeightProgress(PROGRESS_CURRENT_ELEMENT);
-			}, 1500);
-			setTimeout(() => {
-				downloadScreen.ExitAnimation(["show_progress"]);
-			}, 2000);
-
-			setTimeout(() => {
-				videoPlayer.setSourceStream(path.resolve(generatedPath));
-				enabledVideoPlayer();
-				refreshDataPage();
-			}, 2500);
-
-			console.log(path.resolve(generatedPath));
-			
+		.catch((e: Error) => {
+			console.log(e);
 		});
-		
-	}).catch((e:Error)=>{
-		console.log(e)
-	})
-
-	
 };
 
 const validateYotubeLink = (fullUrl: string, id: string): validateYotubeLinkType => {
@@ -129,7 +132,7 @@ const validateYotubeLink = (fullUrl: string, id: string): validateYotubeLinkType
 
 //event : () => search video by click
 
-SEARCH_BUTTON.addEventListener("click",  () => {
+SEARCH_BUTTON.addEventListener("click", () => {
 	let isValid = validateYotubeLink(`${YOUTUBE_VALIDATE_LINK}${INPUT_FIELD_FOR_VIDEO_ID.value}`, INPUT_FIELD_FOR_VIDEO_ID.value);
 	manipulateDOM.toggleElement(SEARCH_BUTTON, { state: false });
 
@@ -143,9 +146,8 @@ SEARCH_BUTTON.addEventListener("click",  () => {
 				setTimeout(async () => {
 					disabledVideoPlayer();
 					downloadScreen.StartAnimation("show_progress");
-					console.log("DATA")
-					initDownloaderVideo(INPUT_FIELD_FOR_VIDEO_ID.value)
-
+					console.log("DATA");
+					initDownloaderVideo(INPUT_FIELD_FOR_VIDEO_ID.value);
 				}, 1000);
 			});
 		}, 1000);
