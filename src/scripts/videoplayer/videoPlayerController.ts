@@ -71,7 +71,7 @@ videoElement.addEventListener("timeupdate", () => {
 	const percent = videoElement.currentTime / videoElement.duration;
 	durationVideoContainer.textContent = durationVideo(videoElement.duration);
 	currentTimeVideoContainer.textContent = durationVideo(videoElement.currentTime);
-	console.log(`${durationVideo(videoElement.currentTime)}/${durationVideo(videoElement.duration)}`);
+	//console.log(`${durationVideo(videoElement.currentTime)}/${durationVideo(videoElement.duration)}`);
 
 	//	console.log(videoElement.currentTime)
 	timeLineContainer.style.setProperty("--progress-position", percent.toString());

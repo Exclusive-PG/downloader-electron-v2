@@ -136,3 +136,25 @@
 .wrapper_content_item {
 	margin-bottom: 40px;
 }
+
+.pagination_current_playlist {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	div {
+		margin-right: 20px;
+		&:hover {
+			cursor: pointer;
+			color: $MAIN_RED_COLOR;
+		}
+	}
+}
+.playing-playlist-name {
+	padding: 20px;
+	font-size: 25px;
+	color: $MAIN_RED_COLOR;
+	font-family: "Poppins", sans-serif;
+	font-weight: 800;
+}

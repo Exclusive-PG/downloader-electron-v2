@@ -1,6 +1,11 @@
 import { path } from "../requiredLib";
 import { HistoryItemType } from "../types/types";
 import { dc } from "./DataCollection";
+import PaginationData from './../pagination/Pagination';
+
+const outerPlaceForPagination = document.querySelector<HTMLElement>(".current_and_total_pages_history");
+const pagination = new PaginationData(5)
+pagination.setOutputPageStatus(outerPlaceForPagination)
 
 const renderCircleCards = (outerPlace: HTMLElement) => {
 	if (Object.keys(dc.GetData.data).length === 0) return;
@@ -178,7 +183,7 @@ let startIndex = 0,
 	currentPage = 1,
 	step = 5;
 
-const outerPlaceForPagination = document.querySelector<HTMLElement>(".current_and_total_pages_history");
+
 
 document.querySelector(".next-history-page").addEventListener("click", () => {
 	if (startIndex + step >= dc.GetData.history.length) return;

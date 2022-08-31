@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import { path } from './scripts/requiredLib';
+const {  Notification } = require('electron')
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 

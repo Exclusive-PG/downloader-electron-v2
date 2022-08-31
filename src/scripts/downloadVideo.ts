@@ -60,10 +60,16 @@ export const initDownloaderVideo = async (VideoId: string) => {
 			video.on("error", (e: Error) => {
 				console.log("Error video ", (e as Error).message);
 				animationDownloadingContoller.EndAnimation("done");
+				showError(document.querySelector(".error-download-data"), `<i class="fa-solid fa-triangle-exclamation"></i> ${(e as Error).message}`)
 				setTimeout(() => {
 					animationDownloadingContoller.ExitAnimation(["run", "done"]);
 					animationDownloadingContoller.refreshHeightProgress(PROGRESS_CURRENT_ELEMENT);
 				}, 1500);
+				setTimeout(() => {
+					downloadScreen.ExitAnimation(["show_progress"]);
+					showError(document.querySelector(".error-download-data"), "")
+				}, 5000);
+			
 			});
 			//LISTENING END DOWNLOAD VIDEO
 			video.on("end", () => {
@@ -171,3 +177,8 @@ INPUT_FIELD_FOR_VIDEO_ID.addEventListener("input", () => {
 		INPUT_FIELD_FOR_VIDEO_ID.value = res[1].includes("&") ? res[1].split("&")[0] : res[1];
 	}
 });
+
+
+function showError(el:HTMLElement,message:string){
+	el.innerHTML = message
+}

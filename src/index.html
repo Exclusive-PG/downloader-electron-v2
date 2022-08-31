@@ -134,6 +134,7 @@
 										<div class="text text-number download-data"></div>
 									</div>
 								</div>
+								<div class="error-download-data"></div>
 							</div>
 						</div>
 						<div class="swiper-slide">
@@ -238,19 +239,23 @@
 					</div>
 				</div>
 			</section>
-			<section class="playlistZone active">
+			<section class="playlistZone ">
 				<div class="playlist_zone_content_wrapper">
 					<center><h2 class="hd_playlist_zone">Playlists</h2></center>
 					<div class="swiper_playlist_or_content swiper">
 						<div class="swiper-wrapper wrapper_content_item">
 							<div class="playlists_render swiper-slide"><center style="color:#fff;padding-top:150px;font-size: 30px;">Playlists not found</center></div>
 							<div class="current-playlist swiper-slide">
+								<div class="playing-playlist-name">
+									<div class="name-zone"></div>
+									<div class="current-page-zone"></div>
+								</div>
 								<div class="content_current_playlist_render"><center style="color:#fff;padding-top:150px;font-size: 30px;">Choose any playlist</center></div>
 								
 								<div class="pagination_current_playlist">
-									<div class="prev-playlist-page"><i class="fa-solid fa-angle-left fa-5x"></i></div>
+									<div class="prev-playlist-page"><i class="fa-solid fa-angle-left fa-2x"></i></div>
 									<div class="current_and_total_pages_playlist"></div>
-									<div class="next-playlist-page"><i class="fa-solid fa-angle-right fa-5x"></i></div>
+									<div class="next-playlist-page"><i class="fa-solid fa-angle-right fa-2x"></i></div>
 								</div>
 							</div>
 						</div>
@@ -265,6 +270,7 @@
 					</div>
 				</div>
 			</section>
+			<section id="output">Click it to see the effect in this interface.</section>
 		</main>
 		<canvas id="canvas" style="z-index: -20; position: fixed; left: 0; top: 0"></canvas>
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
