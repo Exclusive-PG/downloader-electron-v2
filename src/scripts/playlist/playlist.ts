@@ -186,6 +186,7 @@ const showCurrentPlayingVideo = () => {
 };
 
 export const renderPlaylistsZone = () => {
+	arrayPlaylist = createListOfPlaylists();
 	renderAvailablePlaylists(playListsRender);
 };
 

@@ -7,3 +7,4 @@ import "./scripts/settings/video-settings-controller";
 import "./scripts/data-collection/DataCollection";
 import "./scripts/data-collection/data-page";
 import "./scripts/playlist/playlist";
+import "./scripts/home"

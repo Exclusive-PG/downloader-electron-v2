@@ -38,9 +38,17 @@
 			<section class="content_section">
 				<div class="tabs__content">
 					<div class="swiper-wrapper">
-						<!-- <div class="swiper-slide">
-                          HOME
-                      </div> -->
+						<div class="swiper-slide">
+							<div class="home-wrapper">
+
+								<div class="container-wave">
+									<svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+									  <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill: hsl(216, 21%, 16%);"></path>
+									</svg>
+								  </div>
+								  <div class="content-home">Welcome back , Dmitry</div>
+							</div>
+						</div>
 						<div class="swiper-slide download-page">
 							<div class="video_details">
 								<div class="video_details_wrapper active-player">
@@ -239,19 +247,19 @@
 					</div>
 				</div>
 			</section>
-			<section class="playlistZone ">
+			<section class="playlistZone">
 				<div class="playlist_zone_content_wrapper">
 					<center><h2 class="hd_playlist_zone">Playlists</h2></center>
 					<div class="swiper_playlist_or_content swiper">
 						<div class="swiper-wrapper wrapper_content_item">
-							<div class="playlists_render swiper-slide"><center style="color:#fff;padding-top:150px;font-size: 30px;">Playlists not found</center></div>
+							<div class="playlists_render swiper-slide"><center style="color: #fff; padding-top: 150px; font-size: 30px">Playlists not found</center></div>
 							<div class="current-playlist swiper-slide">
 								<div class="playing-playlist-name">
 									<div class="name-zone"></div>
 									<div class="current-page-zone"></div>
 								</div>
-								<div class="content_current_playlist_render"><center style="color:#fff;padding-top:150px;font-size: 30px;">Choose any playlist</center></div>
-								
+								<div class="content_current_playlist_render"><center style="color: #fff; padding-top: 150px; font-size: 30px">Choose any playlist</center></div>
+
 								<div class="pagination_current_playlist">
 									<div class="prev-playlist-page"><i class="fa-solid fa-angle-left fa-2x"></i></div>
 									<div class="current_and_total_pages_playlist"></div>
@@ -270,7 +278,6 @@
 					</div>
 				</div>
 			</section>
-			<section id="output">Click it to see the effect in this interface.</section>
 		</main>
 		<canvas id="canvas" style="z-index: -20; position: fixed; left: 0; top: 0"></canvas>
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
