@@ -84,7 +84,7 @@ function PlayControls() {
 
 	if (isRotateMode) rotateMode();
 }
-
+//set main poster for video
 export const setPoster = (thumbnails: any) => {
 	poster.src = thumbnails[thumbnails.length - 1].url;
 	poster.dataset.posterVideo = "done";
@@ -93,7 +93,7 @@ export const setPoster = (thumbnails: any) => {
 		document.querySelector(".poster-video").classList.remove("poster-done");
 	}, 1000);
 };
-
+/// OFf / ON MAIN VIDEOPLAYER
 export const disabledVideoPlayer = () => {
 	videoPlayer.pause();
 	stopVideoPlayerAnimations();
@@ -104,7 +104,7 @@ export const enabledVideoPlayer = () => {
 	videoElement.load();
 	videoPlayer.play();
 };
-
+// controls for fullscreen mode
 export const toggleFullScreenMode = () => {
 	if (document.fullscreenElement === null) {
 		document.querySelector<HTMLDivElement>(".video_wrapper").requestFullscreen();
@@ -112,7 +112,7 @@ export const toggleFullScreenMode = () => {
 		document.exitFullscreen();
 	}
 };
-
+// controls for picture-in-picture mode
 export const togglePictureInPictureMode = () => {
 	if (document.pictureInPictureElement) {
 		document.exitPictureInPicture();
@@ -123,15 +123,33 @@ export const togglePictureInPictureMode = () => {
 	}
 };
 
-export const setListSrcVideosForVideoPlayer = (list:Array<PlaylistItem>) => {
+export const enabledPictureInPictureMode = async () => {
+	try {
+		!document.pictureInPictureElement && document.pictureInPictureEnabled && (await videoElement.requestPictureInPicture());
+	} catch (e) {
+		console.log((e as Error).message);
+	}
+};
+
+export const disabledPictureInPictureMode = () => document.pictureInPictureElement && document.exitPictureInPicture();
+
+videoElement.addEventListener("leavepictureinpicture", function (event) {
+	console.log("leave pip");
+	setTimeout(() => {
+		videoPlayer.play();
+	}, 1);
+});
+
+//
+export const setListSrcVideosForVideoPlayer = (list: Array<PlaylistItem>) => {
 	videoPlayer.setCurrentPlayingIndexInList = 0;
-	videoPlayer.setListSrcVideos(list)
-	repeatModeSwitcher(1)
-}
-export const setCurrentVideoInList = (currentIndex:number)=>{
+	videoPlayer.setListSrcVideos(list);
+	repeatModeSwitcher(1);
+};
+export const setCurrentVideoInList = (currentIndex: number) => {
 	videoPlayer.setCurrentPlayingIndexInList = currentIndex;
-	videoPlayer.playPlaylist();	
-}
+	videoPlayer.playPlaylist();
+};
 // VOLUME
 let isScrubbingVolume = false;
 function handeVolumeUpdate(e: MouseEvent) {
@@ -190,13 +208,13 @@ function activeRotateMode() {
 
 //Repeat mode switcher
 
-const repeatModeSwitcher = (currentStateRM? : number ) => {
+const repeatModeSwitcher = (currentStateRM?: number) => {
 	let isStatus = repeatControls.hasAttribute("data-state-repeat-mode");
 
 	const { repatAll, repeatOff, repeatOne } = videoPlayer.VariablesForRepeatMode;
 	const STATE = [repeatOff, repeatOne, repatAll];
-	
-	if(currentStateRM !== undefined) videoPlayer.currentStateRepeatMode = currentStateRM
+
+	if (currentStateRM !== undefined) videoPlayer.currentStateRepeatMode = currentStateRM;
 
 	videoPlayer.currentStateRepeatMode === STATE.length - 1 ? (videoPlayer.currentStateRepeatMode = 0) : ++videoPlayer.currentStateRepeatMode;
 
@@ -262,9 +280,8 @@ videoElement.addEventListener("ended", () => {
 	}
 });
 
-repeatControls.addEventListener("click", ()=>{
-
-	repeatModeSwitcher()
+repeatControls.addEventListener("click", () => {
+	repeatModeSwitcher();
 });
 videoElement.addEventListener("click", PlayControls);
 

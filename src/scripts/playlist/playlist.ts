@@ -2,29 +2,22 @@ import Swiper, { Navigation, Pagination } from "swiper";
 import { dc } from "../data-collection/DataCollection";
 import { path } from "../requiredLib";
 import { PlaylistItem } from "../types/types";
-import { setCurrentVideoInList, setListSrcVideosForVideoPlayer } from "../videoplayer/videoPlayerController";
+import { enabledPictureInPictureMode, setCurrentVideoInList, setListSrcVideosForVideoPlayer, togglePictureInPictureMode } from "../videoplayer/videoPlayerController";
 import { configSetup } from "./../../config/currentConfig";
 import { videoPlayer } from "./../videoplayer/videoPlayerController";
 import { fs } from "./../requiredLib";
 import PaginationData from "./../pagination/Pagination";
-
 
 const playlistControllerBtn = document.querySelector(".playlist_controller_btn");
 const playlistZone = document.querySelector(".playlistZone");
 const playListsRender = document.querySelector<HTMLElement>(".playlists_render");
 const videoElement = document.querySelector<HTMLVideoElement>("[data-video]");
 const contentCurrentPlaylistRender = document.querySelector<HTMLElement>(".content_current_playlist_render");
-const playlistPlayingName = document.querySelector<HTMLElement>(".playing-playlist-name")
+const playlistPlayingName = document.querySelector<HTMLElement>(".playing-playlist-name");
 const paginationData = new PaginationData(10);
-paginationData.setOutputPageStatus(document.querySelector(".current_and_total_pages_playlist"));
+paginationData.setOutputPageStatus(document.querySelector(".current_and_total_pages_playlist"), true);
 let currentIdPlaylist: string = "";
-// const NOTIFICATION_TITLE = 'Title'
-// const NOTIFICATION_BODY = 'Notification from the Renderer process. Click to log to console.'
-// const CLICK_MESSAGE = 'Notification clicked!'
-// new Notification(NOTIFICATION_TITLE, { body: NOTIFICATION_BODY })
-// Notification.requestPermission().then(function(result){
-// 	let myNot = new Notification("Electron now",{body:"Hello WOrld"})
-// })
+
 const createListOfPlaylists = () => {
 	let arrayPlaylist: PlaylistItem[] = [];
 	let pathDirectory = configSetup.configDownloadFiles.config.dirSave;
@@ -32,7 +25,7 @@ const createListOfPlaylists = () => {
 	if (!fs.existsSync(pathDirectory)) return;
 
 	dc.getAllFiles(pathDirectory).forEach((item, index) => {
-		if(path.extname(item) !== ".mp4") return;
+		if (path.extname(item) !== ".mp4") return;
 
 		let obj: PlaylistItem = {
 			playlist: path.dirname(item).split(path.sep).pop(),
@@ -106,6 +99,8 @@ const renderAvailableContent = (arrayCurrentPlaylist: Array<PlaylistItem>, outRe
 			showCurrentPlayingVideo();
 		});
 	});
+		videoElement.addEventListener("loadedmetadata",enabledPictureInPictureMode);
+
 };
 
 // render list of playlists - slide 1
@@ -188,6 +183,10 @@ const showCurrentPlayingVideo = () => {
 export const renderPlaylistsZone = () => {
 	arrayPlaylist = createListOfPlaylists();
 	renderAvailablePlaylists(playListsRender);
+	let _filteredContent = filterContent(currentIdPlaylist, arrayPlaylist);
+	setListSrcVideosForVideoPlayer(_filteredContent);
+	renderAvailableContent(paginationData.renderPagination(_filteredContent), contentCurrentPlaylistRender);
+	showCurrentPlayingVideo();
 };
 
 ///EVENTS
@@ -203,8 +202,6 @@ videoElement.addEventListener("ended", () => {
 
 renderAvailablePlaylists(playListsRender);
 
-
-
 //controls pagination
 document.querySelector(".next-playlist-page").addEventListener("click", () => {
 	let _filteredContent = filterContent(currentIdPlaylist, arrayPlaylist);
@@ -219,9 +216,24 @@ document.querySelector(".prev-playlist-page").addEventListener("click", () => {
 	showCurrentPlayingVideo();
 });
 
+fs.watch(configSetup.configDownloadFiles.config.dirSave, (eventType: any, filename: any) => {
+	console.log(eventType);
+	// could be either 'rename' or 'change'. new file event and delete
+	console.log(filename);
+	renderPlaylistsZone();
+});
+
 // let playlists = new Set();
 
 // arrayPlaylist.forEach((item:any)=>{
 //     playlists.add(item.playlist)
 // })
 // console.log(playlists)
+
+// const NOTIFICATION_TITLE = 'Title'
+// const NOTIFICATION_BODY = 'Notification from the Renderer process. Click to log to console.'
+// const CLICK_MESSAGE = 'Notification clicked!'
+// new Notification(NOTIFICATION_TITLE, { body: NOTIFICATION_BODY })
+// Notification.requestPermission().then(function(result){
+// 	let myNot = new Notification("Electron now",{body:"Hello WOrld"})
+// })

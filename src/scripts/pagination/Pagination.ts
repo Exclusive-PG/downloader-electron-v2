@@ -4,13 +4,17 @@ export default class PaginationData {
 		currentPage: 1,
 		step: 10,
 	};
-	private outCurrentPageText: HTMLElement;
+	private outputData : {outCurrentPageText:HTMLElement|null , isRender:boolean}  = {
+		outCurrentPageText:null,
+		isRender : false
+	}
 
 	constructor(itemPerPage: number) {
 		this.config.step = itemPerPage;
 	}
+	public isEnd : boolean = false
 
-	public renderPagination = (data: Array<any>, itemPerPage: number = this.config.step, isOutCurrentPageText: boolean = false) => {
+	public renderPagination = (data: Array<any>, itemPerPage: number = this.config.step, isOutCurrentPageText: boolean = this.outputData.isRender) => {
 		let { startIndex, currentPage, step } = this.config;
 
 		let currentPoint = startIndex,
@@ -32,33 +36,28 @@ export default class PaginationData {
 	};
 
 	public NextPage(dataLenght: Array<any>) {
-		if (this.config.startIndex + this.config.step >= dataLenght.length) return;
-
+		if (this.config.startIndex + this.config.step >= dataLenght.length) {this.isEnd = true;return};
 		this.config.startIndex += this.config.step;
 		this.config.currentPage++;
+		this.isEnd = false;
 	}
 	public PreviousPage() {
-		if (this.config.startIndex <= 0) return;
+		if (this.config.startIndex <= 0)  {this.isEnd = true;return};
 		this.config.startIndex -= this.config.step;
 		this.config.currentPage--;
+		this.isEnd = false;
 	}
-	public setOutputPageStatus(el: HTMLElement) {
-		this.outCurrentPageText = el;
+	public setOutputPageStatus(el: HTMLElement,isRender?:boolean ) {
+		this.outputData.outCurrentPageText = el;
+		isRender && (this.outputData.isRender = isRender);
 	}
 	public outputPageStatus(data: string) {
-		this.outCurrentPageText.textContent = data;
+		this.outputData.outCurrentPageText.textContent = data;
 	}
     public refreshDataPage() {
         this.config.startIndex = 0
     }
 
-
-	set startIndex(value: number) {
-		this.config.startIndex = value;
-	}
-	set currentPage(value: number) {
-		this.config.currentPage = value;
-	}
 	get startIndex() {
 		return this.config.startIndex;
 	}

@@ -1,11 +1,12 @@
 import { path } from "../requiredLib";
 import { HistoryItemType } from "../types/types";
 import { dc } from "./DataCollection";
-import PaginationData from './../pagination/Pagination';
+import PaginationData from "./../pagination/Pagination";
 
 const outerPlaceForPagination = document.querySelector<HTMLElement>(".current_and_total_pages_history");
-const pagination = new PaginationData(5)
-pagination.setOutputPageStatus(outerPlaceForPagination)
+const outerPlaceForHistoryItems = document.querySelector<HTMLElement>(".render_area_history");
+const pagination = new PaginationData(5);
+pagination.setOutputPageStatus(outerPlaceForPagination, true);
 
 const renderCircleCards = (outerPlace: HTMLElement) => {
 	if (Object.keys(dc.GetData.data).length === 0) return;
@@ -98,8 +99,9 @@ function circleProgressBar2(collectionCards: NodeListOf<HTMLElement>) {
 const renderHistory = (outerPlace: HTMLElement, history = dc.GetData.history) => {
 	//let history = dc.GetData.history;
 
-	if (history.length === 0) return;
+	if (history.length === 0 || pagination.isEnd) return;
 
+	console.log(pagination.isEnd);
 	outerPlace.innerHTML = "";
 	try {
 		history.forEach((item: HistoryItemType) => {
@@ -146,64 +148,24 @@ const renderHistory = (outerPlace: HTMLElement, history = dc.GetData.history) =>
 	});
 };
 
-const paginationHistory = (data: Array<any>, itemPerPage: number, outCurrentPageText?: HTMLElement) => {
-	let currentPoint = startIndex,
-		goalPoint = currentPoint + itemPerPage,
-		outerArray: any = [];
-
-	outCurrentPageText.textContent = `${currentPage}/${Math.ceil(data.length / itemPerPage)}`;
-
-	for (let index = currentPoint; index < goalPoint; index++) {
-		if (currentPoint === goalPoint) return;
-
-		outerArray.push(data[index]);
-		++currentPoint;
-	}
-
-	currentPoint = 0;
-
-	//try {
-	renderHistory(document.querySelector(".render_area_history"), outerArray);
-	//} catch (e) {
-	//console.log(e);
-	//return;
-	//}
-};
-
 export const refreshDataPage = () => {
 	// 	setTimeout(() => {
 	// 	circleProgressBar2(document.querySelectorAll(".circular-progress"));
 	// }, 1000);
-		//renderHistory(document.querySelector(".render_area_history"));
+	//renderHistory(document.querySelector(".render_area_history"));
 	renderCircleCards(document.querySelector(".data_card_container"));
-	paginationHistory(dc.GetData.history, step, outerPlaceForPagination);
+	renderHistory(outerPlaceForHistoryItems, pagination.renderPagination(dc.GetData.history));
 };
 
-let startIndex = 0,
-	currentPage = 1,
-	step = 5;
-
-
-
 document.querySelector(".next-history-page").addEventListener("click", () => {
-	if (startIndex + step >= dc.GetData.history.length) return;
-
-	startIndex += step;
-	++currentPage;
-	console.log("next");
-	console.log(startIndex);
-	paginationHistory(dc.GetData.history, step, outerPlaceForPagination);
+	pagination.NextPage(dc.GetData.history);
+	renderHistory(outerPlaceForHistoryItems, pagination.renderPagination(dc.GetData.history));
 });
 
 document.querySelector(".prev-history-page").addEventListener("click", () => {
-	if (startIndex <= 0) return;
-	startIndex -= step;
-	--currentPage;
-	console.log("prev");
-	console.log(startIndex);
-	paginationHistory(dc.GetData.history, step, outerPlaceForPagination);
+	pagination.PreviousPage();
+	renderHistory(outerPlaceForHistoryItems, pagination.renderPagination(dc.GetData.history));
 });
 
 renderCircleCards(document.querySelector(".data_card_container"));
-//renderHistory(document.querySelector(".render_area_history"));
-paginationHistory(dc.GetData.history, step, outerPlaceForPagination);
+renderHistory(outerPlaceForHistoryItems, pagination.renderPagination(dc.GetData.history));
