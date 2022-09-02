@@ -49,8 +49,12 @@ export default class VideoPlayer {
 		this.player.volume = volume;
 	}
 	public setListSrcVideos(listSrc: Array<PlaylistItem>) {
+	try{
 		this.listSrcVideos = listSrc;
 		this.playPlaylist()
+	}catch(e){
+		
+	}
 	}
 	public playPlaylist(){
 		this.setSourceStream(this.listSrcVideos[this.listSrcVideosConfig.currentIndex].path);

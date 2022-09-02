@@ -99,8 +99,7 @@ const renderAvailableContent = (arrayCurrentPlaylist: Array<PlaylistItem>, outRe
 			showCurrentPlayingVideo();
 		});
 	});
-		videoElement.addEventListener("loadedmetadata",enabledPictureInPictureMode);
-
+	videoElement.addEventListener("loadedmetadata", enabledPictureInPictureMode);
 };
 
 // render list of playlists - slide 1
@@ -180,13 +179,15 @@ const showCurrentPlayingVideo = () => {
 	//current-index=${index}
 };
 
-export const renderPlaylistsZone = () => {
+export const renderPlaylistsZone = (allUpdate?:boolean) => {
 	arrayPlaylist = createListOfPlaylists();
 	renderAvailablePlaylists(playListsRender);
+	if(allUpdate){
 	let _filteredContent = filterContent(currentIdPlaylist, arrayPlaylist);
 	setListSrcVideosForVideoPlayer(_filteredContent);
 	renderAvailableContent(paginationData.renderPagination(_filteredContent), contentCurrentPlaylistRender);
 	showCurrentPlayingVideo();
+	}
 };
 
 ///EVENTS
@@ -216,13 +217,17 @@ document.querySelector(".prev-playlist-page").addEventListener("click", () => {
 	showCurrentPlayingVideo();
 });
 
-fs.watch(configSetup.configDownloadFiles.config.dirSave, (eventType: any, filename: any) => {
-	console.log(eventType);
-	// could be either 'rename' or 'change'. new file event and delete
-	console.log(filename);
-	renderPlaylistsZone();
-});
-
+try{
+	fs.watch(configSetup.configDownloadFiles.config.dirSave, (eventType: any, filename: any) => {
+		console.log(eventType);
+		// could be either 'rename' or 'change'. new file event and delete
+		console.log(filename);
+		renderPlaylistsZone(true);
+	});
+}
+catch(e){
+	console.log(e)
+}
 // let playlists = new Set();
 
 // arrayPlaylist.forEach((item:any)=>{

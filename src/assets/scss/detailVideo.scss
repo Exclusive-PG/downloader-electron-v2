@@ -3,11 +3,13 @@ video::-webkit-media-controls {
 }
 
 .poster-video {
-	border-radius: 10px;
-	width: 500px;
-	height: 300px;
-	object-fit: contain;
+    width: 500px;
+    height: 300px;
+    object-fit: cover;
+	border-radius: 100px;
+	
 }
+
 .poster-container {
 	margin-top: 50px;
 	position: relative;
@@ -17,6 +19,7 @@ video::-webkit-media-controls {
 	max-height: 300px;
 	display: block;
 	padding: 200px 0;
+		
 }
 
 .poster-done {

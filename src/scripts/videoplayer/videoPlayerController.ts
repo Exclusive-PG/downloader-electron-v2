@@ -1,5 +1,7 @@
 import { path } from "../requiredLib";
 import VideoPlayer from "./VideoPlayer";
+//@ts-ignore
+import logo from "../../assets/images/main.jpg";
 import {
 	playControlsAnimations,
 	repeatModeAllAnimation,
@@ -323,3 +325,4 @@ document.addEventListener("fullscreenchange", function () {
 
 // const previewImg = document.querySelector<HTMLImageElement>(".preview-img");
 // const thumbnailImg = document.querySelector<HTMLDivElement>(".thumb-img");
+document.querySelector<HTMLImageElement>(".poster-video").src = logo
