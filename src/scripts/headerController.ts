@@ -7,12 +7,10 @@ headerComponents.forEach((item: HTMLLIElement, index: number) => {
 	item.setAttribute(AttributeTarget, `${index}`);
 });
 
-
 const activeLink = (e: any) => {
-	console.log(e.target)
-	
-if(!e.path[1].hasAttribute(AttributeTarget) && !e.target.hasAttribute(AttributeTarget))
-						return
+	console.log(e.target);
+
+	if (!e.path[1].hasAttribute(AttributeTarget) && !e.target.hasAttribute(AttributeTarget)) return;
 
 	headerComponents.forEach((item: HTMLLIElement) => {
 		item.classList.remove("active");
@@ -25,11 +23,10 @@ headerComponents.forEach((item: HTMLLIElement) => {
 	item.addEventListener("click", (e) => activeLink(e));
 });
 
-
 //TABS SETTINGS
 const tabControls = [...document.querySelectorAll(".tabs__controls")];
 const tabsContent = document.querySelector<HTMLElement>(".tabs__content");
-let tabsSwiper;
+let tabsSwiper:any;
 
 const initTabControls = (swiper: any) => {
 	tabControls.forEach((tab) => {
@@ -43,11 +40,13 @@ const initTabControls = (swiper: any) => {
 
 const initTabs = () => {
 	tabsSwiper = new Swiper(tabsContent, {
-		speed:500,
+		speed: 500,
 		autoHeight: true,
-		allowTouchMove:false
+		allowTouchMove: false,
 	});
 };
 
-initTabs();
-initTabControls(tabsSwiper);
+export const headerController = () => {
+	initTabs();
+	initTabControls(tabsSwiper);
+};

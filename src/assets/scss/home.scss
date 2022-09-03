@@ -1,8 +1,7 @@
-
-
-.home-wrapper{
-background-color: #3c31dd;
-min-height: 86vh;
+.home-wrapper {
+	background-color: #3c31dd;
+	min-height: 86vh;
+  position: relative;
 }
 
 // .curve {
@@ -34,26 +33,35 @@ min-height: 86vh;
 //     z-index: -1;
 // }
 svg {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.container-wave {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	padding-bottom: 45%;
+
+	vertical-align: middle;
+	overflow: hidden;
+}
+.content-home {
+	font-size: 30px;
+	font-weight: 800;
+}
+
+.data-home {
+	position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 1;
+  font-family: "Poppins", sans-serif;
+	color: #fff;
+
+  .version{
+    font-size: 22px;
   }
-  .container-wave {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding-bottom: 45%;
-    vertical-align: middle;
-    overflow: hidden;
-  }
-.content-home{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    font-size: 30px;
-    font-weight: 800;
-    font-family: "Poppins", sans-serif;
-    color: #fff;
 }

@@ -6,8 +6,9 @@ import { ManipulateDOM } from "./manipulateDOM";
 import { disabledVideoPlayer, enabledVideoPlayer, setPoster, videoPlayer } from "./videoplayer/videoPlayerController";
 import { configSetup } from "./../config/currentConfig";
 import  { dc } from "./data-collection/DataCollection";
-import { refreshDataPage } from "./data-collection/data-page";
+import { renderDataPage } from "./data-collection/data-page";
 import { renderPlaylistsZone } from "./playlist/playlist";
+
 
 const OUPUT_DATA_PERCENT_DOWNLOAD = document.querySelector<HTMLDivElement>(".download-data");
 const INPUT_FIELD_FOR_VIDEO_ID = document.querySelector<HTMLInputElement>(".searchId");
@@ -102,7 +103,7 @@ export const initDownloaderVideo = async (VideoId: string) => {
 				setTimeout(() => {
 					videoPlayer.setSourceStream(path.resolve(generatedPath));
 					enabledVideoPlayer();
-					refreshDataPage();
+					renderDataPage();
 				}, 2500);
 
 				console.log(path.resolve(generatedPath));

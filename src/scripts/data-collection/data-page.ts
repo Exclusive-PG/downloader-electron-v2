@@ -148,7 +148,7 @@ const renderHistory = (outerPlace: HTMLElement, history = dc.GetData.history) =>
 	});
 };
 
-export const refreshDataPage = () => {
+export const renderDataPage = () => {
 	// 	setTimeout(() => {
 	// 	circleProgressBar2(document.querySelectorAll(".circular-progress"));
 	// }, 1000);
@@ -167,5 +167,4 @@ document.querySelector(".prev-history-page").addEventListener("click", () => {
 	renderHistory(outerPlaceForHistoryItems, pagination.renderPagination(dc.GetData.history));
 });
 
-renderCircleCards(document.querySelector(".data_card_container"));
-renderHistory(outerPlaceForHistoryItems, pagination.renderPagination(dc.GetData.history));
+

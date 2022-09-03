@@ -94,6 +94,8 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
+    "firebase": "^9.9.4",
+    "node-pre-gyp": "^0.17.0",
     "swiper": "^8.1.4",
     "ytdl-core": "^4.11.0"
   }

@@ -201,7 +201,7 @@ videoElement.addEventListener("ended", () => {
 	showCurrentPlayingVideo();
 });
 
-renderAvailablePlaylists(playListsRender);
+//renderAvailablePlaylists(playListsRender);
 
 //controls pagination
 document.querySelector(".next-playlist-page").addEventListener("click", () => {

@@ -9,3 +9,9 @@ import "./scripts/data-collection/data-page";
 import "./scripts/playlist/playlist";
 import "./scripts/home";
 import "./scripts/background/background"
+
+//db
+//import "./firebase/init"
+import "./firebase/initDB"
+
+import "./scripts/appController/app"

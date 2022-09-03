@@ -95,21 +95,22 @@ const confirmSetConfig = () => {
 				confirmConfigBtn.innerHTML = "<p>Apply</p>";
 			}
 		}
-		console.log("ALL")
-		console.log(configSetup.allConfig)
+		console.log("ALL");
+		console.log(configSetup.allConfig);
 	});
 };
 fillInput();
 toggleIconLock(2);
 addEventForChangeInputs();
 
-cancelBtn.addEventListener("click", toggleSettingsPanel);
-openSettingsBtn.addEventListener("click", toggleSettingsPanel);
-cancelVideoSettingsBtn.addEventListener("click",toggleSettingsPanel)
+export const ToggleSettingsPanelController = () => {
+	cancelBtn.addEventListener("click", toggleSettingsPanel);
+	openSettingsBtn.addEventListener("click", toggleSettingsPanel);
+	cancelVideoSettingsBtn.addEventListener("click", toggleSettingsPanel);
+};
 
 confirmConfigBtn.addEventListener("click", () => {
-	let tempConfig: any = {
-	};
+	let tempConfig: any = {};
 	let validateInputsArray = validateAllInput(collectionInputsConfig);
 	showAlertIcon(validateInputsArray, document.querySelectorAll(".error-input-current_config"));
 

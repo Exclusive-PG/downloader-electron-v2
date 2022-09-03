@@ -39,31 +39,27 @@
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
 							<div class="home-wrapper">
-
+								<div class="data-home">
+									<div class="content-home">Welcome back , Dmitry</div>
+									<center><div class="version">ver. 1.0.0.</div></center>
+								</div>
 								<div class="container-wave">
 									<svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
-									  <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill: hsl(216, 21%, 16%);"></path>
+										<path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill: hsl(216, 21%, 16%)"></path>
 									</svg>
-								  </div>
-								  <div class="content-home">Welcome back , Dmitry</div>
+								</div>
 							</div>
 						</div>
 						<div class="swiper-slide download-page">
 							<div class="video_details">
-								<div class="video_details_wrapper ">
+								<div class="video_details_wrapper">
 									<div class="poster-container">
-										<img
-											
-											data-poster-video="none"
-											class="poster-video" 
-											alt=""
-										
-										/>
+										<img data-poster-video="none" class="poster-video" alt="" />
 										<div class="name-video"></div>
 									</div>
 									<div class="video-data">
 										<div class="video_wrapper" style="max-height: 100vh; height: 100%">
-											<video data-video="player" class="video-player" ></video>
+											<video data-video="player" class="video-player"></video>
 											<div class="controls-videoplayer">
 												<div class="duration_time">
 													<span class="current-time">00:00</span>
@@ -279,10 +275,15 @@
 				</div>
 			</section>
 		</main>
+
 		<canvas id="canvas" style="z-index: -20; position: fixed; left: 0; top: 0"></canvas>
 		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 		<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 		<script src="https://kit.fontawesome.com/0be2400dbc.js" crossorigin="anonymous"></script>
+		<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-firestore.js"></script>
+		<script></script>
 	</body>
 </html>
